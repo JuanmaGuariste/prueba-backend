@@ -1,0 +1,38 @@
+[
+    {
+        "tittle": "mate",
+        "description": "azul",
+        "price": 1500,
+        "thumbnail": "sin imagen",
+        "code": "abc123",
+        "stock": 300,
+        "id": 1
+    },
+    {
+        "tittle": "parlante",
+        "description": "verde",
+        "price": 3000,
+        "thumbnail": "sin imagen",
+        "code": "jkjk",
+        "stock": 44,
+        "id": 2
+    },
+    {
+        "tittle": "cinta",
+        "description": "naranja",
+        "price": 5260,
+        "thumbnail": "sin imagen",
+        "code": "aasdad",
+        "stock": 4,
+        "id": 3
+    },
+    {
+        "tittle": "botella",
+        "description": "térmica",
+        "price": 6000,
+        "thumbnail": "sin imagen",
+        "code": "aa66",
+        "stock": 64,
+        "id": 4
+    }
+]
