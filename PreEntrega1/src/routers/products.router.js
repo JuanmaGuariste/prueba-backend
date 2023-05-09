@@ -36,9 +36,33 @@ productsRouter.get("/:pid", async (req, res) => {
 });
 
 productsRouter.post('/', async (req, res) => {
-    await productManager.addProduct(req.body);
-    console.log(req.body);
-    res.status(201).send(req.body);
+    try {
+        await productManager.addProduct(req.body);
+        res.status(201).send(req.body);
+    } catch (err) {
+        res.status(400).send({ status: "error", error: "Ocurrió un error" })
+    }
+
+});
+
+productsRouter.put('/:pid', async (req, res) => { 
+    try {
+        let id = Number(req.params.pid);        
+        await productManager.updateProduct(id, req.body);
+        res.status(201).send(req.body);
+    } catch (err) {
+        res.status(400).send({ status: "error", error: "Ocurrió un error" })
+    }
+});
+
+productsRouter.delete('/:pid', async (req, res) => { 
+    try {
+        let id = Number(req.params.pid);        
+        await productManager.deleteProduct(id);
+        res.status(201).send(id);
+    } catch (err) {
+        res.status(400).send({ status: "error", error: "Ocurrió un error" })
+    }
 });
 
 export { productsRouter };

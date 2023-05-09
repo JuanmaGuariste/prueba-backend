@@ -23,9 +23,9 @@ export default class ProductManager {
      * @param {object} product Producto a agregar un producto al array
      */
     async addProduct(product) {
-        const { tittle, description, price, thumbnail, code, stock } = product;
+        const { tittle, description, category, price, thumbnail, code, stock, status } = product;
 
-        if (!tittle || !description || !price || !thumbnail || !code || !stock) {
+        if (!tittle || !description || !category || !price || !thumbnail || !code || !stock || !status) {
             console.log("Error: Para agregar el producto debe completar todos los campos: tittle; description; price; thumbnail; code y stock.");
             return FAIL;
         }
