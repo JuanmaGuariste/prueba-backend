@@ -1,7 +1,7 @@
-const fs = require('fs');
+import fs from 'fs';
 const FAIL = 0;
 
-class ProductManager {
+export default class ProductManager {
     #id = 0;
 
     constructor(path) {
@@ -214,4 +214,4 @@ const test = async () => {
     }
 };
 
-test();
+// test();

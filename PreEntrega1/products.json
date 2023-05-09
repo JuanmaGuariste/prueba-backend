@@ -1,1 +1,46 @@
-[{"tittle":"erqweqweqwt","description":"verde","category":"limpieza","price":1500,"thumbnail":"sin imagen","code":"sdsdqweqweqes","stock":150,"status":true,"id":1},{"tittle":"erqweqweqwt","description":"verde","category":"comestible","price":1500,"thumbnail":"sin imagen","code":"ahjgss","stock":150,"status":true,"id":3}]
+[
+    {
+        "tittle": "erqweqweqwt",
+        "description": "verde",
+        "category": "limpieza",
+        "price": 1500,
+        "thumbnail": "sin imagen",
+        "code": "sdsdqweqweqes",
+        "stock": 150,
+        "status": true,
+        "id": 1
+    },
+    {
+        "tittle": "s",
+        "description": "verde",
+        "category": "limpieza",
+        "price": 1500,
+        "thumbnail": "sin imagen",
+        "code": "d",
+        "stock": 150,
+        "status": true,
+        "id": 2
+    },
+    {
+        "tittle": "erqweqweqwt",
+        "description": "verde",
+        "category": "comestible",
+        "price": 1500,
+        "thumbnail": "sin imagen",
+        "code": "ahjgss",
+        "stock": 150,
+        "status": true,
+        "id": 3
+    },
+    {
+        "tittle": "as",
+        "description": "verde",
+        "category": "comestible",
+        "price": 1500,
+        "thumbnail": "sin imagen",
+        "code": "ahjddddgss",
+        "stock": 150,
+        "status": true,
+        "id": 4
+    }
+]
