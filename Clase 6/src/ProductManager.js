@@ -17,10 +17,10 @@ export default class ProductManager {
      * @param {object} product Producto a agregar un producto al array
      */
     async addProduct(product) {
-        const {tittle, description, price, thumbnail, code, stock} = product;
+        const {title, description, price, thumbnail, code, stock} = product;
 
-        if (!tittle || !description || !price || !thumbnail || !code || !stock) {
-            console.log("Error: Para agregar el producto debe completar todos los campos: tittle; description; price; thumbnail; code y stock.");
+        if (!title || !description || !price || !thumbnail || !code || !stock) {
+            console.log("Error: Para agregar el producto debe completar todos los campos: title; description; price; thumbnail; code y stock.");
             return FAIL;
         }
 
@@ -167,7 +167,7 @@ const test = async () => {
         console.log(await pm.getProducts());
         //Llamado al método "addProduct" para agregar diferentes productos
         await pm.addProduct({
-            tittle: "mate",
+            title: "mate",
             description: "verde",
             price: 1500,
             thumbnail: "sin imagen",
@@ -175,7 +175,7 @@ const test = async () => {
             stock: 150,
         });
         await pm.addProduct({
-            tittle: "parlante",
+            title: "parlante",
             description: "azul",
             price: 2900,
             thumbnail: "sin imagen",
@@ -183,7 +183,7 @@ const test = async () => {
             stock: 36,
         });
         await pm.addProduct({
-            tittle: "cinta",
+            title: "cinta",
             description: "naranja",
             price: 5260,
             thumbnail: "sin imagen",
