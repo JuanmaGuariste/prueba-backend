@@ -1,6 +1,6 @@
 [
     {
-        "tittle": "erqweqweqwt",
+        "title": "erqweqweqwt",
         "description": "verde",
         "category": "limpieza",
         "price": 1500,
@@ -11,7 +11,7 @@
         "id": 1
     },
     {
-        "tittle": "s",
+        "title": "s",
         "description": "verde",
         "category": "limpieza",
         "price": 1500,
@@ -22,7 +22,7 @@
         "id": 2
     },
     {
-        "tittle": "erqweqweqwt",
+        "title": "erqweqweqwt",
         "description": "verde",
         "category": "comestible",
         "price": 1500,
@@ -33,7 +33,7 @@
         "id": 3
     },
     {
-        "tittle": "as",
+        "title": "as",
         "description": "verde",
         "category": "comestible",
         "price": 1500,

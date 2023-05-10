@@ -3,7 +3,6 @@ const FAIL = 0;
 
 export default class CartManager {
     #id = 0;
-
     constructor(path) {
         this.path = path;
         if (!fs.existsSync(this.path)) {
