@@ -1,6 +1,6 @@
 [
     {
-        "tittle": "mate",
+        "title": "mate",
         "description": "azul",
         "price": 1500,
         "thumbnail": "sin imagen",
@@ -9,7 +9,7 @@
         "id": 1
     },
     {
-        "tittle": "cinta",
+        "title": "cinta",
         "description": "naranja",
         "price": 5260,
         "thumbnail": "sin imagen",
