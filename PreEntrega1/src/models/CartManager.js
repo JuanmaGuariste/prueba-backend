@@ -85,18 +85,33 @@ export default class CartManager {
             }
 
             const cart = actualCarts[cartIndex];
-            console.log(idProduct)
-            console.log(cart.products)
+            // console.log(idProduct)
+            //console.log(cart.products)
 
-            const prodIndex = cart.products.findIndex(
-                (item) => item.product == idProduct
-               
-            );
-            if (prodIndex === -1) {
+            const existProduct = cart.products.some((item) => item.product === idProduct);
+
+            if (existProduct) {
+
+                cart.products.forEach((item) => {
+                    if (item.product === idProduct) {
+                        item.quantity += 1;
+                    }
+                });
+                // existProduct = false;
+            } else {
                 const newProduct = { "product": idProduct, "quantity": 1 }
                 cart.products.push(newProduct);
-                return cart;
             }
+            // console.log(`El producto existe: "${existProduct}"`)
+            // const prodIndex = cart.products.findIndex(
+            //     (item) => item.product === idProduct               
+            // );
+
+            // if (prodIndex === -1) {
+            //     const newProduct = { "product": idProduct, "quantity": 1 }
+            //     cart.products.push(newProduct);
+            //     return cart;
+            // }
 
             // newCart = cart[prodIndex];
             // let existProduct = 0;
@@ -140,3 +155,5 @@ export default class CartManager {
         return this.#id;
     }
 }
+
+
