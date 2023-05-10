@@ -4,10 +4,6 @@ import { cartsRouter } from './routers/carts.router.js';
 
 const app = express();
 
-// const error = {        
-//     idError: "Error: el ID ingresado no existe."
-// }
-
 app.use(express.json());
 
 app.use(express.urlencoded({ extended: true }));

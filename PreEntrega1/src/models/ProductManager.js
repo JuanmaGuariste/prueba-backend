@@ -11,7 +11,6 @@ export default class ProductManager {
         } else {
             const actualProducts = JSON.parse(fs.readFileSync(this.path, 'utf-8'));
             if (actualProducts.length > 0) {
-                // Se obtiene el último ID y se asigna a this.#id
                 const lastProductId = Math.max(...actualProducts.map(prod => prod.id));
                 this.#id = lastProductId;
             }
@@ -20,13 +19,13 @@ export default class ProductManager {
 
     /**
      * Permite agregar un producto persistente
-     * @param {object} product Producto a agregar un producto al array
+     * @param {object} product Producto a agregar al array
      */
     async addProduct(product) {
         const { title, description, category, price, thumbnail, code, stock, status } = product;
 
         if (!title || !description || !category || !price || !thumbnail || !code || !stock || !status) {
-            console.log("Error: Para agregar el producto debe completar todos los campos: title; description; price; thumbnail; code y stock.");
+            console.log("Error: Para agregar el producto debe completar todos los campos: title; description; category; price; thumbnail; code; stock y status.");
             return FAIL;
         }
 
@@ -37,18 +36,20 @@ export default class ProductManager {
             );
 
             if (!(productIndex === -1)) {
-                console.log('');
                 console.log(`Error: El producto con código "${code}" ya existe.`);
                 return FAIL;
             }
 
             actualProducts.push(product);
             product.id = this.#getID();
+            
 
             await fs.promises.writeFile(
                 this.path,
                 JSON.stringify(actualProducts)
             );
+            
+            return product
 
         } catch (err) {
             console.log('Error: No se pudo agregar el producto');
@@ -157,70 +158,7 @@ export default class ProductManager {
             return filteredProducts;
 
         } catch (err) {
-            console.log('Error: No puedo eliminar el producto.');
+            console.log('Error: No se pudo eliminar el producto.');
         }
-
     }
 }
-
-/*------------------------------------Testing----------------------------------------------*/
-
-// Creación de instancia de ProductManager
-// const pm = new ProductManager("./products.json");
-const test = async () => {
-    try {
-        //Llamado a getProducts() con la instancia recién creada
-        console.log(await pm.getProducts());
-        //Llamado al método "addProduct" para agregar diferentes productos
-        await pm.addProduct({
-            title: "mate",
-            description: "verde",
-            price: 1500,
-            thumbnail: "sin imagen",
-            code: "abc123",
-            stock: 150,
-        });
-        await pm.addProduct({
-            title: "parlante",
-            description: "azul",
-            price: 2900,
-            thumbnail: "sin imagen",
-            code: "afg121",
-            stock: 36,
-        });
-        await pm.addProduct({
-            title: "cinta",
-            description: "naranja",
-            price: 5260,
-            thumbnail: "sin imagen",
-            code: "aasdad",
-            stock: 4,
-        });
-        //Llamado a getProducts() con la instancia recién creada
-        console.log(await pm.getProducts());
-        // //Busco un producto por ID con éxito
-        console.log(await pm.getProductById(2));
-        // //Busco un producto por ID con fallo
-        console.log(await pm.getProductById(6));
-        //Actualización de los campos descripción y stock del producto con ID 1
-        console.log(await pm.updateProduct(1, {
-            description: "azul",
-            stock: 300,
-        }));
-        //Actualización de los campos descripción y stock del producto con ID no existente
-        console.log(await pm.updateProduct(7, {
-            description: "verde",
-            price: 6000,
-            stock: 1,
-        }));
-        // Elimino producto con ID = 3
-        console.log(await pm.deleteProduct(2));
-        // Elimino producto con ID no existente
-        console.log(await pm.deleteProduct(8));
-    } catch (err) {
-        // Si hay error imprimo el error en consola
-        console.log('Error: El test no se pudo realizar con éxito');
-    }
-};
-
-// test();
