@@ -1,7 +1,7 @@
 import fs from 'fs';
 const FAIL = 0;
 
-export default class CartManager {
+export default class CartController {
     #id = 0;
     constructor(path) {
         this.path = path;

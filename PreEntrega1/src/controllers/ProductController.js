@@ -1,7 +1,7 @@
 import fs from 'fs';
 const FAIL = 0;
 
-export default class ProductManager {
+export default class ProductController {
     #id = 0;
 
     constructor(path) {
