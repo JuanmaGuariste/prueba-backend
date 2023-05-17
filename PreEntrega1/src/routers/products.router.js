@@ -36,7 +36,6 @@ productsRouter.get("/:pid", async (req, res) => {
 productsRouter.post('/', async (req, res) => {
     try {
         let prodComplete = await productController.addProduct(req.body);
-        console.log(prodComplete)
         if (prodComplete) {
             res.send({ status: "succes", payload: req.body });
         } else {
