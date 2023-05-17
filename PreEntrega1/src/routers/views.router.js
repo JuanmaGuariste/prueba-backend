@@ -17,21 +17,22 @@ viewsRouter.get('/realtimeproducts', async (req, res) => {
 	//const product = await productController.getProducts();
 	res.render('realTimeProducts');
 });
-viewsRouter.post('/realtimeproducts', async (req, res) => {
-	console.log(req.body);
-				// try {
-				// 	let prodComplete = await productController.addProduct(req.body);
-				// 	console.log(prodComplete)
-				// 	if (prodComplete) {
-				// 		res.send({ status: "succes", payload: req.body });
-				// 	} else {
-				// 		res.status(400).send({ status: "error", error: "Es necesario completar todos los campos del producto" })
-				// 	}
-				// } catch (err) {
-				// 	res.status(400).send({ status: "error", error: "Ocurrió un error" })
-				// }
+
+viewsRouter.get('/realtimeproducts', (req, res) => {
+	// console.log(req.body);
+	res.render('realTimeProducts');
+
+		// let prodComplete = await productController.addProduct(req.body);
+		// console.log(prodComplete)
+		// if (prodComplete) {
+		// 	//res.send({ status: "succes", payload: req.body });
+		// 	res.render('realTimeProducts');
+		// } else {
+		// 	res.status(400).send({ status: "error", error: "Es necesario completar todos los campos del producto" })
+		// }
+
 	//const product = await productController.getProducts();
-	//res.render('realTimeProducts');
+	
 });
 
 // userRouter.post('/', (req, res) => {

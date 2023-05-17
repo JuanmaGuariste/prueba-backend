@@ -1,4 +1,4 @@
-<form method='post' action='/realtimeproducts'>
+{{!-- <form method='post' action='/realtimeproducts'>
     <input type='text' required id='title' name='title' placeholder='Título' />
     <input type='text' required id='description' name='description' placeholder='Descripción' />
     <input type='text' required id='category' name='category' placeholder='Categoría' />
@@ -8,8 +8,38 @@
     <input type='number' required id='stock' name='stock' placeholder='Stock' />
     <input type='text' required id='status' name='status' placeholder='Estado' />
     <button type='submit'>Enviar</button>
-</form>
-<h2>Holass</h2>
+</form> --}}
+<h2>Agregar un nuevo producto:</h2>
 
+
+
+<!-- Input para escribir el producto -->
+<input type='text' required id='title' name='title' placeholder='Título' />
+<input type='text' required id='description' name='description' placeholder='Descripción' />
+<input type='text' required id='category' name='category' placeholder='Categoría' />
+<input type='number' required id='price' name='price' placeholder='Precio' />
+<input type='text' required id='thumbnail' name='thumbnail' placeholder='Imagenes' />
+<input type='text' required id='code' name='code' placeholder='Código' />
+<input type='number' required id='stock' name='stock' placeholder='Stock' />
+{{!-- <input type='text' required id='status' name='status' placeholder='Estado' pattern='^(true|false)$' /> --}}
+<select required id='status' name='status' placeholder='Estado'>
+    <option value='true'>true</option>
+    <option value='false'>false</option>
+</select>
+
+<!-- Botón para enviar el producto -->
+<button id='send' onclick="sendProduct()">Enviar</button>
+
+
+<!-- Input para eliminar el producto -->
+<input type='text' required id='id' name='id' placeholder='id' />
+<!-- Botón para enviar el producto -->
+<button id='send' onclick="deleteProduct()">Eliminar</button>
+
+
+<div id='historial'>
+    <!-- Div donde se mostrarán los mensajes -->
+    <div id='totalProducts'></div>
+</div>
 <script src='/socket.io/socket.io.js'></script>
 <script src='/js/main.js'></script>
