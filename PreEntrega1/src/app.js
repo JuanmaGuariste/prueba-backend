@@ -18,6 +18,7 @@ app.set('view engine', 'handlebars');
 app.use(express.static('public'));
 
 app.use('/', viewsRouter);
+app.use('/realtimeproducts', viewsRouter);
 app.use('/api/products', productsRouter);
 app.use('/api/carts', cartsRouter);
 
@@ -29,4 +30,11 @@ const io = new Server(webServer);
 
 io.on('connection', (socket) => {
 	console.log('Nuevo cliente conectado!');	
+	// socket.on('new-message', (message) => {
+	// 	console.log(message);
+	// 	// Agrego el mensaje al array de mensajes
+	// 	messages.push(message);
+	// 	// Propago el evento a todos los clientes conectados
+	// 	io.emit('messages', messages);
+	// });
 });

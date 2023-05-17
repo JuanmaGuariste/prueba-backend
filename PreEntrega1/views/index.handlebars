@@ -1,7 +1,4 @@
 <h1>Hola</h1>
-
-
-
 	<ul>
 		{{#each product}}
 			<li>
@@ -12,11 +9,8 @@
                 <p>Precio: {{this.price}}</p>
                 <p>Código: {{this.code}}</p>
                 <p>Stock: {{this.stock}}</p>
-                <p>Status: {{this.status}}</p>
-                
+                <p>Status: {{this.status}}</p>                
             </li>
 		{{/each}}
 	</ul>
 
-<script src='/socket.io/socket.io.js'></script>
-<script src='/js/main.js'></script>

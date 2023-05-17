@@ -1,0 +1,15 @@
+<form method='post' action='/realtimeproducts'>
+    <input type='text' required id='title' name='title' placeholder='Título' />
+    <input type='text' required id='description' name='description' placeholder='Descripción' />
+    <input type='text' required id='category' name='category' placeholder='Categoría' />
+    <input type='number' required id='price' name='price' placeholder='Precio' />
+    <input type='text' required id='thumbnail' name='thumbnail' placeholder='Imagenes' />
+    <input type='text' required id='code' name='code' placeholder='Código' />
+    <input type='number' required id='stock' name='stock' placeholder='Stock' />
+    <input type='text' required id='status' name='status' placeholder='Estado' />
+    <button type='submit'>Enviar</button>
+</form>
+<h2>Holass</h2>
+
+<script src='/socket.io/socket.io.js'></script>
+<script src='/js/main.js'></script>
