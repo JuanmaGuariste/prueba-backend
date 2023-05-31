@@ -5,7 +5,7 @@ const studentRouter = Router();
 
 studentRouter.get("/", async (req, res) => {
     try{
-        const students = studentService.getAllStudents();
+        const students = await studentService.getAllStudents();
         res.send(students);
     }
     catch(err){
@@ -16,7 +16,7 @@ studentRouter.get("/", async (req, res) => {
 studentRouter.post("/", async (req, res) => {
     const student = req.body;
     try{
-        const studentAdd = studentService.addStudent(student);
+        const studentAdd = await studentService.addStudent(student);
         res.send(studentAdd);
     }
     catch(err){

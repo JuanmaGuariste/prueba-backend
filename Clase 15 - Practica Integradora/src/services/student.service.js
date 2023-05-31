@@ -6,15 +6,19 @@ class StudentService {
     }
 
     async getAllStudents() {
-        return await this.model.find();
+        return await this.model.find().lean();
     }
 
     async addStudent(student) {
-        return await this.model.create(student)
+        return await this.model.create(student);
     }
 
     async removeStudent(studentId) {
         return await this.model.deleteOne({_id: studentId});
+    }
+
+    async getStudentById(studentId) {
+        return await this.model.findOne({_id: studentId});
     }
 }
 

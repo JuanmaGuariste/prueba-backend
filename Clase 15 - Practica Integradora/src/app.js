@@ -2,6 +2,8 @@ import express from 'express';
 import handlebars from 'express-handlebars'
 import mongoose from 'mongoose'
 import studentRouter from './routers/student.router.js';
+import viewsRouter from './routers/views.router.js';
+import courseRouter from './routers/course.router.js';
 
 const app = express();
 
@@ -18,7 +20,9 @@ app.use(express.static('public'));
 
 // app.use('/', viewsRouter);
 // app.use('/realtimeproducts', viewsRouter);
-app.use('/api/student', studentRouter);
+app.use('/api/students', studentRouter);
+app.use('/api/courses', courseRouter);
+app.use('/', viewsRouter);
 // app.use('/api/carts', cartsRouter);
 
 mongoose.connect(
