@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import ProductController from '../controllers/ProductController.js';
+import ProductController from '../dao/ProductController.js';
 
 const viewsRouter = Router();
 const productController = new ProductController("./products.json");

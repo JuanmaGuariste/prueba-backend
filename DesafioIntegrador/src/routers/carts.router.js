@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import CartController from '../controllers/CartController.js';
-import ProductController from '../controllers/ProductController.js';
+import CartController from '../dao/CartController.js';
+import ProductController from '../dao/ProductController.js';
 
 const cartController = new CartController("./carts.json");
 const productController = new ProductController("./products.json");
