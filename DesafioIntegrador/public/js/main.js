@@ -43,7 +43,7 @@ socket.on('totalProducts', (data) => {
 	const html = data.map((elem, index) => {
 	  return `<div class="product-container">
 		<h2>Producto</h2>
-		<p>ID: ${elem.id}</p>
+		<p>ID: ${elem._id}</p>
 		<p>Título: ${elem.title}</p>
 		<p>Descripción: ${elem.description}</p>
 		<p>Categoría: ${elem.category}</p>

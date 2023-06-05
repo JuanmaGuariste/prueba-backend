@@ -10,11 +10,11 @@ viewsRouter.get('/', async (req, res) => {
 });
 
 
-viewsRouter.get('/realtimeproducts', async (req, res) => {
-	res.render('realTimeProducts');
-});
+// viewsRouter.get('/realtimeproducts', async (req, res) => {
+// 	res.render('realTimeProducts');
+// });
 
-viewsRouter.get('/realtimeproducts', (req, res) => {
+viewsRouter.get('/realtimeproducts', async (req, res) => {
 	res.render('realTimeProducts');	
 });
 
