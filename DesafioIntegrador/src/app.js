@@ -12,6 +12,7 @@ const app = express();
 
 // const productController = new ProductController("./products.json");
 let totalProducts = [];
+const messages = [];
 
 app.use(express.json());
 
@@ -26,6 +27,7 @@ app.set('view engine', 'handlebars');
 app.use(express.static('public'));
 
 app.use('/', viewsRouter);
+app.use('/chat', viewsRouter);
 app.use('/realtimeproducts', viewsRouter);
 app.use('/api/products', productsRouter);
 app.use('/api/carts', cartsRouter);
@@ -41,31 +43,53 @@ const webServer = app.listen(8080, () => {
 const io = new Server(webServer);
 
 io.on('connection', async (socket) => {
-	try{
+	try {
 		totalProducts = await productDAO.getAll()
-	} catch(err) {
+	} catch (err) {
 		console.log(err)
 	}
-	console.log('Nuevo cliente conectado!');	
+	console.log('Nuevo cliente conectado!');
 	socket.emit('totalProducts', totalProducts);
 
 	socket.on('new-product', async (product) => {
-		try{
-			 await productDAO.addProduct(product)
-			 totalProducts = await productDAO.getAll()
-		} catch(err) {
+		try {
+			await productDAO.addProduct(product)
+			totalProducts = await productDAO.getAll()
+		} catch (err) {
 			console.log(err)
 		}
 		io.emit('totalProducts', totalProducts);
 	});
-	
+
 	socket.on('delete-product', async (prodId) => {
-		try{
+		try {
 			await productDAO.deleteProduct(prodId)
 			totalProducts = await productDAO.getAll()
-		} catch(err) {
+		} catch (err) {
 			console.log(err)
 		}
 		io.emit('totalProducts', totalProducts);
 	});
+
+
+
+
+	// Envio los mensajes al cliente que se conectó
+	socket.emit('messages', messages);
+
+	// Escucho los mensajes enviado por el cliente y se los propago a todos
+	socket.on('message', (message) => {
+		console.log(message);
+		// Agrego el mensaje al array de mensajes
+		messages.push(message);
+		// Propago el evento a todos los clientes conectados
+		io.emit('messages', messages);
+	});
+
+	socket.on('sayhello', (data) => {
+		socket.broadcast.emit('connected', data);
+	});
+
+
 });
+

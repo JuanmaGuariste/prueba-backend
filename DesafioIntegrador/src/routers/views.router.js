@@ -9,13 +9,12 @@ viewsRouter.get('/', async (req, res) => {
 	res.render('index',  {product} );
 });
 
-
-// viewsRouter.get('/realtimeproducts', async (req, res) => {
-// 	res.render('realTimeProducts');
-// });
-
-viewsRouter.get('/realtimeproducts', async (req, res) => {
+viewsRouter.get('/realtimeproducts', (req, res) => {
 	res.render('realTimeProducts');	
 });
 
+viewsRouter.get('/chat', (req, res) => {
+	// Renderizamos la vista index
+	res.render('chat');
+});
 export default viewsRouter;
