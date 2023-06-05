@@ -30,7 +30,7 @@ app.use(express.static('public'));
 // app.use('/', viewsRouter);
 // app.use('/realtimeproducts', viewsRouter);
 app.use('/api/products', productsRouter);
-// app.use('/api/carts', cartsRouter);
+app.use('/api/carts', cartsRouter);
 
 const webServer = app.listen(8080, () => {
 	console.log('Escuchando 8080');
