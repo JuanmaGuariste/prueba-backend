@@ -1,13 +1,14 @@
 import { Router } from 'express';
-import ProductController from '../dao/ProductController.js';
+import productDAO from '../dao/ProductDAO.js';
 
 const viewsRouter = Router();
-const productController = new ProductController("./products.json");
 
 viewsRouter.get('/', async (req, res) => {
-	const product = await productController.getProducts();
-	res.render('index', { product });
+	const product = await productDAO.getAll();
+	console.log(product)
+	res.render('index',  {product} );
 });
+
 
 viewsRouter.get('/realtimeproducts', async (req, res) => {
 	res.render('realTimeProducts');

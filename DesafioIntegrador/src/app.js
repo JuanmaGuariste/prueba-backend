@@ -3,6 +3,7 @@ import handlerbars from 'express-handlebars';
 import viewsRouter from './routers/views.router.js';
 import { productsRouter } from './routers/products.router.js';
 import { cartsRouter } from './routers/carts.router.js';
+
 import { Server } from 'socket.io';
 import mongoose from 'mongoose';
 import ProductDAO from './dao/ProductDAO.js';
@@ -17,9 +18,7 @@ app.use(express.json());
 
 app.use(express.urlencoded({ extended: true }));
 
-mongoose.connect(
-	'mongodb+srv://juanmaguariste:guaripsw@cluster0.d5w82e1.mongodb.net/?retryWrites=true&w=majority'
-);
+
 
 app.engine('handlebars', handlerbars.engine());
 app.set('views', 'views/');
@@ -27,10 +26,14 @@ app.set('view engine', 'handlebars');
 
 app.use(express.static('public'));
 
-// app.use('/', viewsRouter);
+app.use('/', viewsRouter);
 // app.use('/realtimeproducts', viewsRouter);
 app.use('/api/products', productsRouter);
 app.use('/api/carts', cartsRouter);
+
+mongoose.connect(
+	'mongodb+srv://juanmaguariste:guaripsw@cluster0.d5w82e1.mongodb.net/?retryWrites=true&w=majority'
+);
 
 const webServer = app.listen(8080, () => {
 	console.log('Escuchando 8080');
