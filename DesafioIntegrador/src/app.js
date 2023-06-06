@@ -6,13 +6,14 @@ import { cartsRouter } from './routers/carts.router.js';
 import { Server } from 'socket.io';
 import mongoose from 'mongoose';
 import productDAO from './dao/ProductDAO.js';
+import chatDAO from './dao/chatDAO.js';
 //import ProductController from './dao/ProductController.js';
 
 const app = express();
 
 // const productController = new ProductController("./products.json");
 let totalProducts = [];
-const messages = [];
+let messages = [];
 
 app.use(express.json());
 
@@ -45,6 +46,7 @@ const io = new Server(webServer);
 io.on('connection', async (socket) => {
 	try {
 		totalProducts = await productDAO.getAll()
+		messages = await chatDAO.getAllMessages()
 	} catch (err) {
 		console.log(err)
 	}
@@ -78,10 +80,12 @@ io.on('connection', async (socket) => {
 	socket.emit('messages', messages);
 
 	// Escucho los mensajes enviado por el cliente y se los propago a todos
-	socket.on('message', (message) => {
+	socket.on('message', async (message) => {
 		console.log(message);
 		// Agrego el mensaje al array de mensajes
-		messages.push(message);
+		//messages.push(message);
+		await chatDAO.addMessage(message)
+		messages = await chatDAO.getAllMessages()
 		// Propago el evento a todos los clientes conectados
 		io.emit('messages', messages);
 	});
