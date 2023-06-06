@@ -7,12 +7,11 @@ class ChatDAO {
 
     async getAllMessages() {
         return await this.model.find().lean();
-    }    
+    }
 
-    async addMessage(chat) {        
+    async addMessage(chat) {
         return await this.model.create(chat);
     }
-    
 }
 
 const chatDAO = new ChatDAO();

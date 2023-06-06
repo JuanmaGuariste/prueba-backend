@@ -10,10 +10,10 @@ class ProductDAO {
     }
 
     async getProductById(pid) {
-        return await this.model.findOne({_id: pid});
+        return await this.model.findOne({ _id: pid });
     }
 
-    async addProduct(product) {        
+    async addProduct(product) {
         return await this.model.create(product);
     }
 
@@ -21,14 +21,14 @@ class ProductDAO {
         if (!pid) {
             throw new Error('Missing required fields');
         }
-        return await this.model.updateOne({_id: pid}, product);
+        return await this.model.updateOne({ _id: pid }, product);
     }
 
     async deleteProduct(pid) {
         if (!pid) {
             throw new Error('Missing required fields');
         }
-        return await this.model.deleteOne({_id: pid});
+        return await this.model.deleteOne({ _id: pid });
     }
 }
 

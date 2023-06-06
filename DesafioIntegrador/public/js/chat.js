@@ -5,10 +5,10 @@ const inputMSJ = document.getElementById('msj');
 Swal.fire({
 	title: 'Bienvenido',
 	input: 'text',
-	text: 'Identificate para participar del PiolaChat',
+	text: 'Ingresa tu nombre de usuario',
 	icon: 'success',
 	inputValidator: (value) => {
-		return !value && 'Tenes que identificarte, aca fantasmas no...';
+		return !value && 'Por favor, ingresa tu nombre de usuario';
 	},
 	allowOutsideClick: false,
 }).then((result) => {
@@ -17,18 +17,14 @@ Swal.fire({
 });
 
 function render(data) {
-	// Genero el html
 	const html = data
 		.map((elem, index) => {
-			// Recorro el array de mensajes y genero el html
 			return `<div>
 				<strong>${elem.user}:</strong>
                 <em>${elem.msj}</em>
             </div>`;
 		})
-		.join(' '); // Convierto el array de strings en un string
-
-	// Inserto el html en el elemento con id messages
+		.join(' ');
 	document.getElementById('messages').innerHTML = html;
 }
 

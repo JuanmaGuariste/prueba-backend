@@ -42,13 +42,12 @@ export default class ProductController {
 
             actualProducts.push(product);
             product.id = this.#getID();
-            
 
             await fs.promises.writeFile(
                 this.path,
                 JSON.stringify(actualProducts)
             );
-            
+
             return product
 
         } catch (err) {
