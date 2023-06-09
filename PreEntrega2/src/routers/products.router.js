@@ -5,7 +5,7 @@ const productsRouter = Router();
 
 productsRouter.get('/', async (req, res) => {
     try {
-        const products = await productDAO.getAll();
+        const products = await productDAO.getAllProducts();
         res.status(201).send({ status: "success", payload: products })
     }
     catch (err) {

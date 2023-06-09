@@ -5,7 +5,7 @@ class CartDAO {
         this.model = cartModel;
     }
 
-    async getAll() {
+    async getAllCarts() {
         return await this.model.find();
     }
 

@@ -5,8 +5,17 @@ class ProductDAO {
         this.model = productModel;
     }
 
-    async getAll() {
-        return await this.model.find().lean();
+    async getAllProducts(limit = 10, page = 1, category = false, title = false) {
+        // return await this.model.find().lean();
+        let filter = {}
+
+        if (category) {
+            filter = { ...filter, category }
+        }
+        if (title) {
+            filter = { ...filter, title }
+        }
+        return await this.model.paginate(filter, { lean: true, page, limit, title });
     }
 
     async getProductById(pid) {

@@ -4,8 +4,11 @@ import productDAO from '../dao/ProductDAO.js';
 const viewsRouter = Router();
 
 viewsRouter.get('/', async (req, res) => {
-	const product = await productDAO.getAll();	
-	res.render('index', { product });
+	const {limit, page, category, title } = req.query;
+	const product = await productDAO.getAllProducts(limit, page, category, title);
+	product.category = category;
+	product.title = title;
+	res.render('index', product);
 });
 
 viewsRouter.get('/realtimeproducts', (req, res) => {

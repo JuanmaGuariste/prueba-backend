@@ -39,7 +39,7 @@ const io = new Server(webServer);
 
 io.on('connection', async (socket) => {
 	try {
-		totalProducts = await productDAO.getAll()
+		totalProducts = await productDAO.getAllProducts()
 		messages = await chatDAO.getAllMessages()
 	} catch (err) {
 		console.log(err)
@@ -50,7 +50,7 @@ io.on('connection', async (socket) => {
 	socket.on('new-product', async (product) => {
 		try {
 			await productDAO.addProduct(product)
-			totalProducts = await productDAO.getAll()
+			totalProducts = await productDAO.getAllProducts()
 		} catch (err) {
 			console.log(err)
 		}
@@ -60,7 +60,7 @@ io.on('connection', async (socket) => {
 	socket.on('delete-product', async (prodId) => {
 		try {
 			await productDAO.deleteProduct(prodId)
-			totalProducts = await productDAO.getAll()
+			totalProducts = await productDAO.getAllProducts()
 		} catch (err) {
 			console.log(err)
 		}
