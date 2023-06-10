@@ -22,8 +22,6 @@ app.set('view engine', 'handlebars');
 app.use(express.static('public'));
 
 app.use('/', viewsRouter);
-app.use('/chat', viewsRouter);
-app.use('/realtimeproducts', viewsRouter);
 app.use('/api/products', productsRouter);
 app.use('/api/carts', cartsRouter);
 

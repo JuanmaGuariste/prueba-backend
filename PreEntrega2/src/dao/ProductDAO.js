@@ -5,17 +5,41 @@ class ProductDAO {
         this.model = productModel;
     }
 
-    async getAllProducts(limit = 10, page = 1, category = false, title = false) {
-        // return await this.model.find().lean();
+    async getAllProducts(limit = 10, page = 1, category = false, status = false, sort) {
         let filter = {}
 
         if (category) {
             filter = { ...filter, category }
         }
-        if (title) {
-            filter = { ...filter, title }
+        if (status) {
+            filter = { ...filter, status }
         }
-        return await this.model.paginate(filter, { lean: true, page, limit, title });
+
+        // this.model.paginate(filter, { lean: true, page, limit, status });
+
+
+        this.model.paginate(filter, { lean: true, page, limit, status });
+
+        //const result = await studentsModel.aggregate([
+        // 	{ $group: { _id: '$grade', students: { $push: '$$ROOT' } } },
+        // 	{ $sort: { _id: -1 } },
+        // ]);
+
+        if (sort === "asc") {
+            const prod = await this.model.aggregate(
+                [
+                    { $match: { $text: { $search: "operating" } } },
+                    { $sort: { score: { $meta: "textScore" }, posts: -1 } }
+                  ]
+            );
+            return prod;
+        } else if (sort === "desc") {
+            return this.model.aggregate([
+                { $sort: { price: -1 } },
+            ]);
+        } else {
+            return this.model.paginate(filter, { lean: true, page, limit, status });
+        }
     }
 
     async getProductById(pid) {

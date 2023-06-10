@@ -36,6 +36,7 @@ const productSchema = mongoose.Schema({
 	status: {
 		type: Boolean,
 		required: true,
+		index: true,
 	},
 });
 
