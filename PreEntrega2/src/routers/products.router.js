@@ -6,12 +6,16 @@ const productsRouter = Router();
 
 productsRouter.get('/', async (req, res) => {
     const { limit, page, category, status, sort } = req.query;
+
     try {
-        const product = await productDAO.getAllProducts(limit, page, category, status, sort);
-        product.category = category;
-        product.status = status;
-        product.sort = sort;
-        console.log(product)
+        let product = await productDAO.getAllProducts(limit, page, category, status, sort);
+        // product.category = category;
+        // product.status = status;       
+        // if (product.hasNextPage) {
+        //     product.nextLink=`?limit=${product.limit}&page=${product.nextPage}&category=${product.category}`
+        // }
+           
+        //console.log(product)
         res.status(201).send({ status: "success", payload: product })
         //res.status(200).render('index', product);
     }

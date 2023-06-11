@@ -5,41 +5,48 @@ class ProductDAO {
         this.model = productModel;
     }
 
-    async getAllProducts(limit = 10, page = 1, category = false, status = false, sort) {
+    async getAllProducts(limit = 10, page = 1, category = false, status = false, sort = false) {
         let filter = {}
+        let options = {
+            lean: true,
+            page,
+            limit,
+        }
+        let link = `&limit=${limit}`
 
         if (category) {
             filter = { ...filter, category }
+            link = link + `&category=${category}`
         }
         if (status) {
             filter = { ...filter, status }
+            link = link + `&status=${status}`
         }
-
-        // this.model.paginate(filter, { lean: true, page, limit, status });
-
-
-        this.model.paginate(filter, { lean: true, page, limit, status });
-
-        //const result = await studentsModel.aggregate([
-        // 	{ $group: { _id: '$grade', students: { $push: '$$ROOT' } } },
-        // 	{ $sort: { _id: -1 } },
-        // ]);
-
         if (sort === "asc") {
-            const prod = await this.model.aggregate(
-                [
-                    { $match: { $text: { $search: "operating" } } },
-                    { $sort: { score: { $meta: "textScore" }, posts: -1 } }
-                  ]
-            );
-            return prod;
+            options = { ...options, sort: { price: 1 } }
+            link = link + `&sort=asc`
         } else if (sort === "desc") {
-            return this.model.aggregate([
-                { $sort: { price: -1 } },
-            ]);
-        } else {
-            return this.model.paginate(filter, { lean: true, page, limit, status });
+            options = { ...options, sort: { price: -1 } }
+            link = link + `&sort=desc`
+
         }
+
+        let products = await this.model.paginate(filter, options);     
+
+        if (products.hasNextPage) {
+            products.nextLink = link+ `&page=${products.nextPage}`
+        } else {
+            products.nextLink = null;
+        }
+
+        if (products.hasPrevPage) {
+            products.prevLink = link+ `&page=${products.prevPage}`
+        } else {
+            products.prevLink = null;
+        }
+
+        
+        return products
     }
 
     async getProductById(pid) {
