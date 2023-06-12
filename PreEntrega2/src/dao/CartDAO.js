@@ -61,7 +61,10 @@ class CartDAO {
     async updateCart(cid, prod) {
         console.log(prod)
         let cart = await this.model.findOne({ _id: cid });
-        cart.products.push(prod);
+        cart.products = [];
+        for (let i = 0; i < prod.length; i++){
+            cart.products.push(prod[i]);
+        }
         return await this.model.updateOne({ _id: cid }, cart);
 
         // return await this.model.findOneAndUpdate(
