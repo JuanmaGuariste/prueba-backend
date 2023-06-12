@@ -65,5 +65,17 @@ cartsRouter.put("/:cid", async (req, res) => {
     }
 });
 
+cartsRouter.put("/:cid/product/:pid", async (req, res) => {
+    let pid = req.params.pid;
+    let cid = req.params.cid;
+    let newCant = parseInt(req.body.cant)
+    try {
+        await cartDAO.updateProductInCart(pid, cid, newCant );
+        res.status(201).send({ status: "success", payload: cid });
+    } catch (err) {
+        res.status(500).send({ status: "error", error: err })
+    }
+});
+
 export { cartsRouter };
 

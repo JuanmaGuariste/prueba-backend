@@ -57,26 +57,22 @@ class CartDAO {
             { new: true }
         );
     }
-
+    
     async updateCart(cid, prod) {
-        console.log(prod)
         let cart = await this.model.findOne({ _id: cid });
         cart.products = [];
         for (let i = 0; i < prod.length; i++){
             cart.products.push(prod[i]);
         }
-        return await this.model.updateOne({ _id: cid }, cart);
-
-        // return await this.model.findOneAndUpdate(
-        //     { _id: cid },
-        //     { $pull: { products: prod } },
-        //     { new: true }
-        // );
-        // return await this.model.findOneAndUpdate(
-        //     { _id: cid },
-        //     { $pull: { products: prod } },
-        //     { new: true }
-        // );
+        return await this.model.updateOne({ _id: cid }, cart);      
+    }
+    
+    async updateProductInCart(pid, cid, newCant) {
+        return await this.model.findOneAndUpdate(
+            { _id: cid, "products.product": pid },
+            { $set: { "products.$.cant": newCant} },
+            { new: true }
+        );
     }
 }
 
