@@ -12,7 +12,7 @@ class ProductDAO {
             page,
             limit,
         }
-        let link = `&limit=${limit}`
+        let link = `?limit=${limit}`
 
         if (category) {
             filter = { ...filter, category }
@@ -45,7 +45,8 @@ class ProductDAO {
             products.prevLink = null;
         }
 
-
+        products.category = category;
+        products.category = category;
         return products
     }
 
