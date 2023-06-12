@@ -10,7 +10,7 @@ class CartDAO {
     }
 
     async getCartById(cid) {
-        return await this.model.findOne({ _id: cid }).populate('products.product');
+        return await this.model.findOne({ _id: cid }).populate('products.product').lean();
     }
 
     async addProductToCart(pid, cid) {

@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import productDAO from '../dao/ProductDAO.js';
+import cartDAO from '../dao/CartDAO.js'
 
 const viewsRouter = Router();
 
@@ -12,17 +13,28 @@ viewsRouter.get('/products', async (req, res) => {
     const { limit, page, category, status, sort } = req.query;
 
     try {
-        let product = await productDAO.getAllProducts(limit, page, category, status, sort);
+        let products = await productDAO.getAllProducts(limit, page, category, status, sort);
 		// product.limit = limit;
 		// product.page = page;
 		// product.category = category;
 		// product.status = status ;
 		// product.sort = sort ;
-		 //console.log(product)        
-        res.render('index',  product );
+		//console.log(products)        
+        res.render('products',  products );
         //res.status(200).render('index', product);
     }
     catch (err) {
+        res.status(500).send({ status: "error", error: err })
+    }
+});
+
+viewsRouter.get("/carts/:cid", async (req, res) => {
+    let id = req.params.cid
+    try {
+        let cart = await cartDAO.getCartById(id); 
+        console.log(cart._id)
+        res.render('carts',  cart );
+    } catch (err) {
         res.status(500).send({ status: "error", error: err })
     }
 });
