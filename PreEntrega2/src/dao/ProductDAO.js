@@ -31,21 +31,21 @@ class ProductDAO {
 
         }
 
-        let products = await this.model.paginate(filter, options);     
+        let products = await this.model.paginate(filter, options);
 
         if (products.hasNextPage) {
-            products.nextLink = link+ `&page=${products.nextPage}`
+            products.nextLink = link + `&page=${products.nextPage}`
         } else {
             products.nextLink = null;
         }
 
         if (products.hasPrevPage) {
-            products.prevLink = link+ `&page=${products.prevPage}`
+            products.prevLink = link + `&page=${products.prevPage}`
         } else {
             products.prevLink = null;
         }
 
-        
+
         return products
     }
 

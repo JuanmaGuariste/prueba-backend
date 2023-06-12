@@ -27,9 +27,20 @@ cartsRouter.post("/:cid/product/:pid", async (req, res) => {
     let pid = req.params.pid;
     try {
         let cart = await cartDAO.addProductToCart(pid, cid);
-        res.status(201).send({ status: "succes", payload: cart });
+        res.status(201).send({ status: "success", payload: cart });
     }
     catch (err) {
+        res.status(500).send({ status: "error", error: err })
+    }
+});
+
+cartsRouter.delete("/:cid/product/:pid", async (req, res) => {
+    let cid = req.params.cid;
+    let pid = req.params.pid;
+    try {      
+        await cartDAO.deleteProductFromCart(pid, cid);
+        res.status(201).send({ status: "success", payload: pid });
+    } catch (err) {
         res.status(500).send({ status: "error", error: err })
     }
 });
