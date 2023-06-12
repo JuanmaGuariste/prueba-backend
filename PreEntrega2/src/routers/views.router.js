@@ -18,7 +18,7 @@ viewsRouter.get('/products', async (req, res) => {
 		// product.category = category;
 		// product.status = status ;
 		// product.sort = sort ;
-		// console.log(product)
+		 //console.log(product)        
         res.render('index',  product );
         //res.status(200).render('index', product);
     }
