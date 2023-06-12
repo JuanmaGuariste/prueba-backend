@@ -10,7 +10,6 @@ class CartDAO {
     }
 
     async getCartById(cid) {
-        console.log("hola")
         return await this.model.findOne({ _id: cid }).populate('products.product');
     }
 
@@ -20,9 +19,7 @@ class CartDAO {
         if (productIndex !== -1) {
             cart.products[productIndex].cant += 1;
         } else {
-            console.log(cart.products)
             cart.products.push({ product: pid, cant: 1 });
-            console.log(cart.products)
         }
         return await this.model.updateOne({ _id: cid }, cart);
     }
@@ -50,7 +47,33 @@ class CartDAO {
             { _id: cid },
             { $pull: { products: { product: pid } } },
             { new: true }
-        );        
+        );
+    }
+
+    async deleteCartContent(cid) {
+        return await this.model.findOneAndUpdate(
+            { _id: cid },
+            { $pull: { products: {} } },
+            { new: true }
+        );
+    }
+
+    async updateCart(cid, prod) {
+        console.log(prod)
+        let cart = await this.model.findOne({ _id: cid });
+        cart.products.push(prod);
+        return await this.model.updateOne({ _id: cid }, cart);
+
+        // return await this.model.findOneAndUpdate(
+        //     { _id: cid },
+        //     { $pull: { products: prod } },
+        //     { new: true }
+        // );
+        // return await this.model.findOneAndUpdate(
+        //     { _id: cid },
+        //     { $pull: { products: prod } },
+        //     { new: true }
+        // );
     }
 }
 

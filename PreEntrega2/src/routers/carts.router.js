@@ -37,9 +37,29 @@ cartsRouter.post("/:cid/product/:pid", async (req, res) => {
 cartsRouter.delete("/:cid/product/:pid", async (req, res) => {
     let cid = req.params.cid;
     let pid = req.params.pid;
-    try {      
+    try {
         await cartDAO.deleteProductFromCart(pid, cid);
         res.status(201).send({ status: "success", payload: pid });
+    } catch (err) {
+        res.status(500).send({ status: "error", error: err })
+    }
+});
+
+cartsRouter.delete("/:cid", async (req, res) => {
+    let cid = req.params.cid;
+    try {
+        await cartDAO.deleteCartContent(cid);
+        res.status(201).send({ status: "success", payload: cid });
+    } catch (err) {
+        res.status(500).send({ status: "error", error: err })
+    }
+});
+
+cartsRouter.put("/:cid", async (req, res) => {
+    let cid = req.params.cid;
+    try {
+        await cartDAO.updateCart(cid, req.body);
+        res.status(201).send({ status: "success", payload: cid });
     } catch (err) {
         res.status(500).send({ status: "error", error: err })
     }
