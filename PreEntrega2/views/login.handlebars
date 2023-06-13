@@ -1,0 +1,30 @@
+<section class="container">
+    <div class="row bg-light login-section">
+        <div class="col-12">
+            <h1 class="text-center">Ingresar</h1>
+        </div>
+        <div class="col-12">
+            {{!-- <h1>Registro nuevo usuario</h1> --}}
+            <form action="/api/user/auth" method="post">
+                <div class="row">                    
+                    <div class="col-12">
+                        <input
+                        type="email"
+                        class="form-control"
+                        name="email"
+                        placeholder="Correo"
+                        />
+                    </div>
+                    <div class="col-12">
+                        <input 
+                        type="password" 
+                        class="form-control" 
+                        name="password" 
+                        placeholder="Contraseña"
+                        />
+                    </div>                    
+                    <button type="submit" class="btn btn-primary col-12 mt-3">Ingresar</button>
+                </div>
+            </form>
+        </div>
+</section>

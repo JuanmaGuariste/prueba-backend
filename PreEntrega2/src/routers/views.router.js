@@ -33,4 +33,15 @@ viewsRouter.get('/chat', (req, res) => {
     res.render('chat');
 });
 
+viewsRouter.get('/register', (req, res) => {
+    res.render('register', { 
+        title: "Registrar nuevo usuario",        
+    });
+})
+viewsRouter.get('/login', (req, res) => {
+    res.render('login', { 
+        title: "Iniciar sesión",        
+    });
+})
+
 export default viewsRouter;
