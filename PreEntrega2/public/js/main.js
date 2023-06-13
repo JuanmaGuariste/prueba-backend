@@ -1,8 +1,6 @@
 const socket = io();
 
-
 async function createCart() {
-
 	return await fetch('http://localhost:8080/api/carts',
 		{
 			method: 'POST'
@@ -15,8 +13,8 @@ async function createCart() {
 			console.error('Error al crear el carrito:', error);
 		});
 }
-async function getCartID() {
 
+async function getCartID() {
 	let cid = JSON.parse(localStorage.getItem('carrito'));
 	if (!cid) {
 		cid = await createCart();
@@ -26,11 +24,8 @@ async function getCartID() {
 }
 
 async function addProductToCart(pid) {
-	let cid = JSON.parse(localStorage.getItem('carrito'));
-	if (!cid) {
-		cid = await createCart();
-		localStorage.setItem('carrito', JSON.stringify(cid));
-	}	
+	let cid = await getCartID()
+	console.log(cid)
 	const response = await fetch(`http://localhost:8080/api/carts/${cid}/product/${pid}`, {
 		method: 'POST'
 	});
@@ -50,12 +45,7 @@ async function addProductToCart(pid) {
 }
 
 async function deleteProductFromCart(pid) {
-	let cid = JSON.parse(localStorage.getItem('carrito'));
-	if (!cid) {
-		cid = await createCart();
-		localStorage.setItem('carrito', JSON.stringify(cid));
-	};
-
+	let cid = await getCartID();
 	const response = await fetch(`http://localhost:8080/api/carts/${cid}/product/${pid}`, {
 		method: 'DELETE'
 	});
@@ -65,9 +55,9 @@ async function deleteProductFromCart(pid) {
 			title: 'Producto quitado del carrito',
 			icon: 'warning'
 		})
-		.then(() => {
-			window.location.reload();
-		})
+			.then(() => {
+				window.location.reload();
+			})
 	} else {
 		Swal.fire({
 			title: 'Error al quitar el producto del carrito',

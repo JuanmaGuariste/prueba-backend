@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary justify-content-center" data-bs-theme="dark">
     <ul class="nav justify-content-center">
         <li class="nav-item">
-            <a class="nav-link" href="#">Productos</a>
+            <a class="nav-link" href="/products">Productos</a>
         </li>
         <li class="nav-item">
             <select class="form-select" aria-label="Default select example">
@@ -11,13 +11,8 @@
                 <option value="3">librería</option>
             </select>
         </li>
-        {{!-- <li class="nav-item">
-            <a class="nav-link" href="#">Categorias</a>
-        </li> --}}
         <li class="nav-item">
             <a class="nav-link" href="/carts/{{_id}}">Carrito</a>
-            {{!-- <a class="nav-link" href="carts/={{limit}}&page={{prevPage}}&gender={{gender}}">Carrito</a> --}}
-
         </li>
     </ul>
 </nav>
@@ -28,27 +23,18 @@
     <div class='row'>
         {{#each products}}
         <div class="card my-3 mx-1" style="width: 18rem;">
-            {{!-- <img src="..." class="card-img-top" alt="..."> --}}
             <figure class="figure">
                 <img src="https://dummyimage.com/300" class="figure-img img-fluid rounded" alt="Imagen del producto.">
-                {{!-- <figcaption class="figure-caption">A caption for the above image.</figcaption> --}}
             </figure>
             <div class="card-body">
                 <h5 class="card-title">{{this.product.title}}</h5>
                 <p class="card-text">{{this.product.description}}</p>
                 <p class="card-text">Categoría: {{this.product.category}}</p>
-                {{!-- <button class="btn btn-success my-3" onclick="addProductToCart('{{this._id}}')">Agregar al
-                    carrito</button> --}}
-                {{!-- <button class="btn btn-success my-3" onclick="createCart()">Agregar al
-                    carrito</button> --}}
                 <button class="btn btn-danger" onclick="deleteProductFromCart('{{this.product._id}}')">Quitar del
                     carrito</button>
-
-
             </div>
         </div>
         {{/each}}
-
     </div>
 </div>
 

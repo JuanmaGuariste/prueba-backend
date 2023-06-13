@@ -3,10 +3,8 @@ import productDAO from '../dao/ProductDAO.js';
 
 const productsRouter = Router();
 
-
 productsRouter.get('/', async (req, res) => {
     const { limit, page, category, status, sort } = req.query;
-
     try {
         let product = await productDAO.getAllProducts(limit, page, category, status, sort);
         res.status(201).send({ status: "success", payload: product })
