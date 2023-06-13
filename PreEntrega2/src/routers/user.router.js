@@ -5,7 +5,7 @@ const userRouter = Router();
 
 userRouter.post("/", async (req, res) => {
     const userData = req.body;
-    try{
+    try {
         const newUser = await UserDAO.createUser(userData);
         res.status(201).json(newUser);
     } catch (err) {
@@ -14,16 +14,16 @@ userRouter.post("/", async (req, res) => {
 })
 
 userRouter.post("/auth", async (req, res) => {
-  const { email, password } = req.body;
-  try{
-      const user = await UserDAO.getUserByEmail(email);
-      if (!user) throw new Error("Usuario no encontrado");
-      if (user.password !== password) throw new Error("Contraseña incorrecta");
-      req.session.user = user;
-      res.status(200).json(user);
-  } catch (err) {
-      res.status(400).json({ error: err.message })
-  }
+    const { email, password } = req.body;
+    try {
+        const user = await UserDAO.getUserByEmail(email);
+        if (!user) throw new Error("Usuario no encontrado");
+        if (user.password !== password) throw new Error("Contraseña incorrecta");
+        req.session.user = user;
+        res.status(200).json(user);
+    } catch (err) {
+        res.status(400).json({ error: err.message })
+    }
 })
 
 export default userRouter;

@@ -28,7 +28,7 @@ app.use(
 	session({
 		store: MongoStore.create({
 			mongoUrl:
-				'mongodb+srv://jdecima:123@coderclaster.fttdpng.mongodb.net/?retryWrites=true&w=majority',
+				'mongodb+srv://juanmaguariste:guaripsw@cluster0.d5w82e1.mongodb.net/?retryWrites=true&w=majority',
 			mongoOptions: {
 				useNewUrlParser: true,
 			},

@@ -34,13 +34,22 @@ viewsRouter.get('/chat', (req, res) => {
 });
 
 viewsRouter.get('/register', (req, res) => {
-    res.render('register', { 
-        title: "Registrar nuevo usuario",        
+    res.render('register', {
+        title: "Registrar nuevo usuario",
     });
 })
+
 viewsRouter.get('/login', (req, res) => {
-    res.render('login', { 
-        title: "Iniciar sesión",        
+    res.render('login', {
+        title: "Iniciar sesión",
+    });
+})
+viewsRouter.get('/', (req, res) => {
+    const { user } = req.session;
+    delete user.password;
+    res.render('index', {
+        title: "Perfil de usuario",
+        user: req.session.user,
     });
 })
 
