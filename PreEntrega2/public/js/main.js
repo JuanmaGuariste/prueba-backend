@@ -25,7 +25,6 @@ async function getCartID() {
 
 async function addProductToCart(pid) {
 	let cid = await getCartID()
-	console.log(cid)
 	const response = await fetch(`http://localhost:8080/api/carts/${cid}/product/${pid}`, {
 		method: 'POST'
 	});
