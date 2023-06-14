@@ -49,6 +49,9 @@ class ProductDAO {
         products.category = category;
         return products
     }
+    async getProducts() {
+        return await this.model.find();
+    }
 
     async getProductById(pid) {
         return await this.model.findOne({ _id: pid });

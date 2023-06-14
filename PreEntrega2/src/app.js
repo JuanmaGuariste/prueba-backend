@@ -62,7 +62,7 @@ io.on('connection', async (socket) => {
 	let status = false;
 	let sort = false;
 	try {
-		totalProducts = await productDAO.getAllProducts(limit, page, category, status, sort)
+		totalProducts = await productDAO.getProducts(limit, page, category, status, sort)
 		messages = await chatDAO.getAllMessages()
 	} catch (err) {
 		console.log(err)
@@ -73,7 +73,7 @@ io.on('connection', async (socket) => {
 	socket.on('new-product', async (product) => {
 		try {
 			await productDAO.addProduct(product)
-			totalProducts = await productDAO.getAllProducts(limit, page, category, status, sort)
+			totalProducts = await productDAO.getProducts(limit, page, category, status, sort)
 		} catch (err) {
 			console.log(err)
 		}
@@ -83,7 +83,7 @@ io.on('connection', async (socket) => {
 	socket.on('delete-product', async (prodId) => {
 		try {
 			await productDAO.deleteProduct(prodId)
-			totalProducts = await productDAO.getAllProducts(limit, page, category, status, sort)
+			totalProducts = await productDAO.getProducts(limit, page, category, status, sort)
 		} catch (err) {
 			console.log(err)
 		}
