@@ -171,3 +171,14 @@ section {
 .btn-outline-danger {
 	border-radius: var(--radius);
 }
+
+
+
+.user-form {
+	display: flex;
+	align-items: center;
+}
+
+.user-info {
+	margin-right: 10px;
+}

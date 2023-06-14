@@ -7,7 +7,7 @@ userRouter.post("/", async (req, res) => {
     const userData = req.body;
     try {
         const newUser = await UserDAO.createUser(userData);
-        res.status(201).json(newUser);
+        res.redirect('/');
     } catch (err) {
         res.status(400).json({ error: err })
     }
@@ -20,10 +20,15 @@ userRouter.post("/auth", async (req, res) => {
         if (!user) throw new Error("Usuario no encontrado");
         if (user.password !== password) throw new Error("Contraseña incorrecta");
         req.session.user = user;
-        res.status(200).json(user);
+        res.redirect('/products');
     } catch (err) {
         res.status(400).json({ error: err.message })
     }
+})
+
+userRouter.post("/logout", (req, res) => {
+    req.session.destroy();
+    res.redirect('/login');
 })
 
 export default userRouter;

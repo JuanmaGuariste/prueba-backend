@@ -56,8 +56,13 @@ const webServer = app.listen(8080, () => {
 const io = new Server(webServer);
 
 io.on('connection', async (socket) => {
+	let limit = 10;
+	let page= 1;
+	let category = false;
+	let status = false;
+	let sort = false;
 	try {
-		totalProducts = await productDAO.getAllProducts()
+		totalProducts = await productDAO.getAllProducts(limit, page, category, status, sort)
 		messages = await chatDAO.getAllMessages()
 	} catch (err) {
 		console.log(err)
@@ -68,7 +73,7 @@ io.on('connection', async (socket) => {
 	socket.on('new-product', async (product) => {
 		try {
 			await productDAO.addProduct(product)
-			totalProducts = await productDAO.getAllProducts()
+			totalProducts = await productDAO.getAllProducts(limit, page, category, status, sort)
 		} catch (err) {
 			console.log(err)
 		}
@@ -78,7 +83,7 @@ io.on('connection', async (socket) => {
 	socket.on('delete-product', async (prodId) => {
 		try {
 			await productDAO.deleteProduct(prodId)
-			totalProducts = await productDAO.getAllProducts()
+			totalProducts = await productDAO.getAllProducts(limit, page, category, status, sort)
 		} catch (err) {
 			console.log(err)
 		}
