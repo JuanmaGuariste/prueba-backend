@@ -124,7 +124,7 @@ input {
 
 
 :root {
-	--gradient: linear-gradient(135deg, #008bf6, #9506f5);
+	--gradient: linear-gradient(135deg, #008bf6, #004f8b);
 	--p-color: #008bf6;
 	--radius: 25px;
 	--shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
@@ -181,4 +181,21 @@ section {
 
 .user-info {
 	margin-right: 10px;
+}
+
+
+
+.custom-navbar {
+    max-width: 90%; /* Ajusta el porcentaje según tus necesidades */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.band-name{
+	color: #008bf6;
+	font: 1.2em sans-serif;
+}
+
+.custom-img{
+	max-height: 30px;
 }
