@@ -10,7 +10,7 @@ viewsRouter.get('/products', isAuth, async (req, res) => {
     const { user } = req.session;
     delete user.password;
     try {
-        let products = await productDAO.getAllProducts(limit, page, category, status, sort);
+        let products = await productDAO.getAllProducts(limit, page, category, status, sort);        
         res.render('products', {
             products,
             user,            

@@ -186,16 +186,31 @@ section {
 
 
 .custom-navbar {
-    max-width: 90%; /* Ajusta el porcentaje según tus necesidades */
-    margin-left: auto;
-    margin-right: auto;
+	max-width: 90%;
+	/* Ajusta el porcentaje según tus necesidades */
+	margin-left: auto;
+	margin-right: auto;
 }
 
-.band-name{
+.band-name {
 	color: #008bf6;
 	font: 1.2em sans-serif;
 }
 
-.custom-img{
+.custom-img {
 	max-height: 30px;
+}
+
+.wellcome-text {
+	color: #333;
+	/* Color de texto */
+	font-family: Arial, sans-serif;
+	/* Fuente */
+	font-size: 24px;
+	/* Tamaño de fuente */
+	margin-bottom: 10px;
+	/* Espacio inferior */
+	text-align: start;
+	/* Alineación de texto */
+	color: #fff
 }
