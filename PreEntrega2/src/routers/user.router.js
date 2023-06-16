@@ -1,13 +1,21 @@
 import { Router } from "express";
 import UserDAO from "../dao/UserDAO.js";
+import { hashPassword, comparePassword } from "../dao/utils/encrypt.utils.js";
+
 
 const userRouter = Router();
 
 userRouter.post("/", async (req, res) => {
-    const userData = req.body;
+    const userData = {
+        ...req.body,
+        password: hashPassword(req.body.password)
+    };
+    // console.log(userData)
     try {
         const newUser = await UserDAO.createUser(userData);
-        res.redirect('/');
+        // delete newUser.password
+         // res.status(201).json(newUser);
+         res.redirect('/');
     } catch (err) {
         res.redirect('/register');
         //res.status(400).json({ error: err })
@@ -32,7 +40,7 @@ userRouter.post("/auth", async (req, res) => {
         } else {
             const user = await UserDAO.getUserByEmail(email);        
             if (!user) throw new Error("Usuario no encontrado");
-            if (user.password !== password) throw new Error("Contraseña incorrecta");
+            if (!comparePassword(user, password)) throw new Error("Contraseña incorrecta");            
             req.session.user = user;
             res.redirect('/products');
         }
