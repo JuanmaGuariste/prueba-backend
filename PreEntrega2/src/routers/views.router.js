@@ -8,7 +8,7 @@ const viewsRouter = Router();
 viewsRouter.get('/products', isAuth, async (req, res) => {
     const { limit, page, category, status, sort } = req.query;
     const { user } = req.session;
-    delete user.password;
+    delete user.password;  
     try {
         let products = await productDAO.getAllProducts(limit, page, category, status, sort);        
         res.render('products', {
@@ -60,6 +60,7 @@ viewsRouter.get('/login', isGuest, (req, res) => {
 		title: 'Inicio de Sesión',
 	});
 });
+
 viewsRouter.get('/', isAuth, (req, res) => {
 	const { user } = req.session;
 	delete user.password;
