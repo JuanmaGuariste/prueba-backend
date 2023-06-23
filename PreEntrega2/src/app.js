@@ -10,6 +10,8 @@ import productDAO from './dao/ProductDAO.js';
 import chatDAO from './dao/chatDAO.js';
 import session from 'express-session';
 import MongoStore from 'connect-mongo';
+import inicializePassport from './dao/config/passport.config.js';
+import passport from 'passport';
 	
 const app = express();
 let totalProducts = [];
@@ -40,9 +42,15 @@ app.use(
 	})
 );
 
+inicializePassport(app);
+app.use(passport.initialize());
+app.use(passport.session());
+
 mongoose.connect(
 	'mongodb+srv://juanmaguariste:guaripsw@cluster0.d5w82e1.mongodb.net/?retryWrites=true&w=majority'
 );
+
+
 
 app.use('/', viewsRouter);
 app.use('/api/products', productsRouter);
