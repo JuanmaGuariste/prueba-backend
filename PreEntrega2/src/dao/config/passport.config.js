@@ -49,7 +49,22 @@ const inicializePassport = () => {
             user.rol = "user";
         }
         done(null, user);
-    })
+    });
+
+    passport.use("login", new LocalStrategy({usernameField: "email"}, async (username, password, done) => {
+        try{
+            const user = await userDAO.getUserByEmail(username);
+            if (!user) {
+                return done(null, false, { message: 'Usuario no encontrado' });
+            } 
+            if (!comparePassword(user, password)) {
+                return done(null, false, { message: 'Dato incorrecto' });
+            }
+            return done(null, user);
+        } catch(err){
+            return done(err);
+        }
+    }))
 
 }
 
