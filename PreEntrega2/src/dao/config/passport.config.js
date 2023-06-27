@@ -1,4 +1,5 @@
 import passport from 'passport';
+import GitHubStrategy from 'passport-github2';
 import local from 'passport-local';
 import userDAO from '../UserDAO.js';
 import { hashPassword, comparePassword } from '../utils/encrypt.utils.js';
@@ -6,31 +7,58 @@ import { hashPassword, comparePassword } from '../utils/encrypt.utils.js';
 const LocalStrategy = local.Strategy;
 
 const inicializePassport = () => {
+
+    passport.use("github", new GitHubStrategy({
+        clientID: "Iv1.27225588721570ec",
+        clientSecret: "f7382fc12bf753556a5014fbf4d20a1b37f789db",
+        callbackURL: "http://localhost:8080/api/user/githubcallback"
+    }, async (accessToken, refreshToken, profile, done) => {
+        try{
+            console.log(profile);
+            let user = await userDAO.getUserByEmail(profile._json.email);
+            if(!user){
+                let newUser = {
+                    first_name: profile._json.name,
+                    last_name: "",
+                    email: profile._json.email,
+                    password: "",
+                    img: profile._json.avatar_url,
+                }
+                user = await userDAO.createUser(newUser);
+                done(null, user)
+            } else {
+                done(null, user)
+            }
+        }catch(err){
+            done(err, false);
+        }
+    }));
+
     passport.use(
         'register',
         new LocalStrategy({
-            usernameField: 'email', 
+            usernameField: 'email',
             passReqToCallback: true
         }, async (req, username, password, done) => {
             const { first_name, last_name, img } = req.body;
 
-            try{
+            try {
                 const user = await userDAO.getUserByEmail(username);
-                if(user){
+                if (user) {
                     return done(null, false, { message: 'El usuario ya existe' });
                 }
                 const hashedPassword = await hashPassword(password);
-                const newUser = await userDAO.createUser({ 
+                const newUser = await userDAO.createUser({
                     first_name,
                     last_name,
                     email: username,
                     password: hashedPassword,
-                    img,                  
+                    img,
                 });
                 return done(null, newUser);
 
 
-            }catch(err){
+            } catch (err) {
                 return done(err);
             }
         })
@@ -40,10 +68,10 @@ const inicializePassport = () => {
         done(null, user._id);
     });
 
-    passport.deserializeUser(async (id, done) => {        
+    passport.deserializeUser(async (id, done) => {
         const user = await userDAO.getUserById(id);
 
-        if (user.email === "adminCoder@coder.com"){
+        if (user.email === "adminCoder@coder.com") {
             user.rol = "admin";
         } else {
             user.rol = "user";
@@ -51,21 +79,20 @@ const inicializePassport = () => {
         done(null, user);
     });
 
-    passport.use("login", new LocalStrategy({usernameField: "email"}, async (username, password, done) => {
-        try{
+    passport.use("login", new LocalStrategy({ usernameField: "email" }, async (username, password, done) => {
+        try {
             const user = await userDAO.getUserByEmail(username);
             if (!user) {
                 return done(null, false, { message: 'Usuario no encontrado' });
-            } 
+            }
             if (!comparePassword(user, password)) {
                 return done(null, false, { message: 'Dato incorrecto' });
             }
             return done(null, user);
-        } catch(err){
+        } catch (err) {
             return done(err);
         }
-    }))
-
+    }));
 }
 
 export default inicializePassport;
