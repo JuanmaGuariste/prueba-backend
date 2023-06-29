@@ -110,19 +110,6 @@ input {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 :root {
 	--gradient: linear-gradient(135deg, #008bf6, #004f8b);
 	--p-color: #008bf6;
@@ -187,7 +174,6 @@ section {
 
 .custom-navbar {
 	max-width: 90%;
-	/* Ajusta el porcentaje según tus necesidades */
 	margin-left: auto;
 	margin-right: auto;
 }
