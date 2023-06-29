@@ -13,7 +13,6 @@ const inicializePassport = () => {
         callbackURL: "http://localhost:8080/api/user/githubcallback"
     }, async (accessToken, refreshToken, profile, done) => {
         try {
-            console.log(profile);
             let user = await userDAO.getUserByEmail(profile._json.email);
             if (!user) {
                 let newUser = {
@@ -61,7 +60,6 @@ const inicializePassport = () => {
     )
 
     passport.serializeUser((user, done) => {
-        console.log(user);
         done(null, user._id);
     });
 
