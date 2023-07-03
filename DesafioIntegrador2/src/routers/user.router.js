@@ -29,7 +29,7 @@ userRouter.get(
 );
 
 userRouter.post(
-    "/",
+    "/auth",
     passport.authenticate("login", { failureRedirect: '/loginError' }),
     async (req, res) => {
         if (!req.user) return res.status(400).send("Usuario no encontrado")
