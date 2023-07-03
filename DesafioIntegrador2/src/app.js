@@ -12,6 +12,7 @@ import session from 'express-session';
 import MongoStore from 'connect-mongo';
 import inicializePassport from './dao/config/passport.config.js';
 import passport from 'passport';
+import {generateToken, authToken} from './dao/middleware/jwt.middleware.js';
 	
 const app = express();
 let totalProducts = [];
