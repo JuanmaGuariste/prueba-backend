@@ -3,6 +3,9 @@ import GitHubStrategy from 'passport-github2';
 import local from 'passport-local';
 import userDAO from '../UserDAO.js';
 import { hashPassword, comparePassword } from '../utils/encrypt.utils.js';
+import jwt from "passport-jwt";
+
+const jwtStrategy = jwt.Strategy
 
 const LocalStrategy = local.Strategy;
 
