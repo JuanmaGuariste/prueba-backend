@@ -1,7 +1,7 @@
 import passport from 'passport';
 import GitHubStrategy from 'passport-github2';
 import local from 'passport-local';
-import userDAO from '../UserDAO.js';
+import userDAO from '../dao/mongo/UserDAO.js';
 import { hashPassword, comparePassword } from '../utils/encrypt.utils.js';
 import jwt from "passport-jwt";
 

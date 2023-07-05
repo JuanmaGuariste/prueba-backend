@@ -6,13 +6,13 @@ import { cartsRouter } from './routers/carts.router.js';
 import userRouter from './routers/user.router.js';
 import { Server } from 'socket.io';
 import mongoose from 'mongoose';
-import productDAO from './dao/ProductDAO.js';
-import chatDAO from './dao/chatDAO.js';
+import productDAO from './dao/mongo/ProductDAO.js';
+import chatDAO from './dao/mongo/ChatDAO.js';
 import session from 'express-session';
 import MongoStore from 'connect-mongo';
-import inicializePassport from './dao/config/passport.config.js';
+import inicializePassport from './config/passport.config.js';
 import passport from 'passport';
-import {generateToken, authToken} from './dao/middleware/jwt.middleware.js';
+import {generateToken, authToken} from './middleware/jwt.middleware.js';
 	
 const app = express();
 let totalProducts = [];

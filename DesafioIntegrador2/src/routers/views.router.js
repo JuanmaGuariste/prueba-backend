@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import productDAO from '../dao/ProductDAO.js';
-import cartDAO from '../dao/CartDAO.js'
-import { isAuth, isGuest } from '../dao/middleware/auth.middleware.js';
+import productDAO from '../dao/mongo/ProductDAO.js';
+import cartDAO from '../dao/mongo/CartDAO.js';
+import { isAuth, isGuest } from '../middleware/auth.middleware.js';
 
 const viewsRouter = Router();
 

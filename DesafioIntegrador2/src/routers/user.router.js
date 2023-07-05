@@ -1,6 +1,6 @@
 import { Router } from "express";
-import UserDAO from "../dao/UserDAO.js";
-import { hashPassword, comparePassword } from "../dao/utils/encrypt.utils.js";
+import userDAO from "../dao/mongo/UserDAO.js";
+import { hashPassword, comparePassword } from "../utils/encrypt.utils.js";
 import passport from "passport";
 
 const userRouter = Router();
