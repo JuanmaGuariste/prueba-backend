@@ -4,8 +4,11 @@ import local from 'passport-local';
 import userDAO from '../dao/mongo/UserDAO.js';
 import { hashPassword, comparePassword } from '../utils/encrypt.utils.js';
 import jwt from "passport-jwt";
+import { Strategy, ExtractJwt } from 'passport-jwt';
+
 
 const jwtStrategy = jwt.Strategy
+const jwtExtract = ExtractJwt;
 
 const LocalStrategy = local.Strategy;
 
@@ -76,7 +79,7 @@ const inicializePassport = () => {
         }
     });
 
-    passport.use("login", new LocalStrategy({ usernameField: "email" }, async (username, password, done) => {
+   /*  passport.use("login", new LocalStrategy({ usernameField: "email" }, async (username, password, done) => {
         try {
             if (username === "adminCoder@coder.com" && password === "1234") {
                 const user = {
@@ -97,12 +100,42 @@ const inicializePassport = () => {
                 if (!comparePassword(user, password)) {
                     return done(null, false, { message: 'Dato incorrecto' });
                 }
-                return done(null, user);
+                // return done(null, user);
+                const token = generateToken(user);
+                res.status(200).send({ token });
             }
         } catch (err) {
             return done(err);
         }
-    }));
+    })); */
+
+    passport.use(
+		'jwt',
+		new jwtStrategy(
+			{
+				jwtFromRequest: jwtExtract.fromExtractors([cookieExtractor]),
+				secretOrKey: 'privateKey',
+			},
+			(payload, done) => {                
+				done(null, payload.user);
+			}
+		),
+		async (payload, done) => {
+			try {
+				return done(null, payload);
+			} catch (error) {
+				done(error);
+			}
+		}
+	);    
 }
+
+const cookieExtractor = (req) => {
+	let token = null;
+	if (req && req.cookies) {
+		token = req.cookies['token'];
+	}
+	return token;
+};
 
 export default inicializePassport;

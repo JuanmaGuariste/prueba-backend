@@ -12,7 +12,8 @@ import session from 'express-session';
 import MongoStore from 'connect-mongo';
 import inicializePassport from './config/passport.config.js';
 import passport from 'passport';
-import {generateToken, authToken} from './middleware/jwt.middleware.js';
+import cookieParser from 'cookie-parser';
+//import {generateToken, authToken} from './middleware/jwt.middleware.js';
 	
 const app = express();
 let totalProducts = [];
@@ -26,6 +27,16 @@ app.set('views', 'views/');
 app.set('view engine', 'handlebars');
 
 app.use(express.static('public'));
+
+app.use(cookieParser('B2zdY3B$pHmxW%'));
+//app.use(passport.session());
+inicializePassport(app);
+
+app.use(passport.initialize());
+
+mongoose.connect(
+	'mongodb+srv://juanmaguariste:guaripsw@cluster0.d5w82e1.mongodb.net/?retryWrites=true&w=majority'
+);
 
 app.use(
 	session({
@@ -41,14 +52,6 @@ app.use(
 		resave: true,
 		saveUninitialized: true,
 	})
-);
-
-inicializePassport(app);
-app.use(passport.initialize());
-app.use(passport.session());
-
-mongoose.connect(
-	'mongodb+srv://juanmaguariste:guaripsw@cluster0.d5w82e1.mongodb.net/?retryWrites=true&w=majority'
 );
 
 app.use('/', viewsRouter);
