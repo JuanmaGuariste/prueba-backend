@@ -1,12 +1,7 @@
 import passport from "passport";
+import jwt from "jsonwebtoken";
 
-//import jwt from "jsonwebtoken";
-
-//const privateKey = "privateKey";
-
-/* const generateToken = (user) => {
-    return jwt.sign(user, privateKey, { expiresIn: "1h" });
-};
+const privateKey = 'privateKey';
 
 const authToken = (req, res, next) => {
     const authHeader = req.headers.authorization;
@@ -23,21 +18,21 @@ const authToken = (req, res, next) => {
         req.user = credentials.user;
         next();
     })
-} */
+} 
 
 const middlewarePassportJWT = async (req, res, next) => {
 	passport.authenticate('jwt', { session: false }, (err, usr, info) => {
+        console.log(usr)
 		if (err) {
 			next(err);
 		}
 
 		if (!usr) {
-			res.redirect('/public');
+			res.redirect('/login');
 		}
 		req.user = usr;
 		next();
 	})(req, res, next);
 };
 
-
-export {middlewarePassportJWT};
+export {middlewarePassportJWT, authToken};

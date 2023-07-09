@@ -41,10 +41,11 @@ userRouter.get(
         res.redirect('/products');
     }) */
 
-userRouter.post("/logout", (req, res) => {
-    req.session.destroy();
-    res.redirect('/login');
-})
+userRouter.post('/logout', (req, res) => {
+	res.clearCookie('token');
+	res.redirect('/login');
+  });
+
 
 /* userRouter.post('/login', async (req, res) => {
 	const { email, password } = req.body;
@@ -73,25 +74,38 @@ userRouter.post("/logout", (req, res) => {
 
 userRouter.post('/login', async (req, res) => {
 	const { email, password } = req.body;
-		try {			
-			const user = await userDAO.getUserByEmail(email);
-			if (!user) {
-				//return res.redirect('/404');
-				return res.redirect('/registerError');
-			}
 	
-			if (!bcrypt.compareSync(password, user.password)) {
-				//return res.redirect('/404');
-				return res.redirect('/registerError');
-			}
-	
-			const token = jwt.sign({ user }, 'privateKey', { expiresIn: '1h' });
-			console.log(user)
-			console.log(token)
-			res.cookie('token', token, {
-				httpOnly: true,
-				maxAge: 6000000,
-			}).redirect('/products');
+	let user = {};
+		try {
+			if (email === "adminCoder@coder.com" && password === "1234") {
+                user = {
+                    first_name: "Coder",
+                    last_name: "House",
+                    email: email,
+					age: 26,
+                    password: password,
+                    img: "https://pbs.twimg.com/profile_images/1465705281279590405/1yiTdkKj_400x400.png",
+                    rol: "admin",
+					cart: [],
+                    _id: "coder",
+                };  
+            } else {			
+				user = await userDAO.getUserByEmail(email);
+				if (!user) {
+					//return res.redirect('/404');
+					return res.redirect('/registerError');
+				}		
+				if (!bcrypt.compareSync(password, user.password)) {
+					//return res.redirect('/404');
+					return res.redirect('/registerError');
+				}	
+			}	
+				const token = jwt.sign({ user }, 'privateKey', { expiresIn: '1h' });		
+				res.cookie('token', token, {
+					httpOnly: true,
+					maxAge: 6000000,
+				}).redirect('/products');
+						
 		} catch (err) {
 			res.redirect('/registerError');
 		}

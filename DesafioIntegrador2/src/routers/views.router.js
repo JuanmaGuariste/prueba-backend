@@ -8,12 +8,13 @@ const viewsRouter = Router();
 
 viewsRouter.get('/products', middlewarePassportJWT, async (req, res) => {
     const { limit, page, category, status, sort } = req.query;
-    const user = req.user; 
+    const user = req.user;
     try {
-        let products = await productDAO.getAllProducts(limit, page, category, status, sort);        
+
+        let products = await productDAO.getAllProducts(limit, page, category, status, sort);
         res.render('products', {
             products,
-            user,            
+            user,
         });
     }
     catch (err) {
@@ -24,14 +25,14 @@ viewsRouter.get('/products', middlewarePassportJWT, async (req, res) => {
 
 viewsRouter.get("/carts/:cid", middlewarePassportJWT, async (req, res) => {
     let id = req.params.cid;
-    const { user } = req.session;
+    const { user } = req.user;
     delete user.password;
     try {
-        let cart = await cartDAO.getCartById(id);        
+        let cart = await cartDAO.getCartById(id);
 
         res.render('carts', {
             cart,
-            user,            
+            user,
         });
     } catch (err) {
         res.status(500).send({ status: "error", error: err })
@@ -39,10 +40,10 @@ viewsRouter.get("/carts/:cid", middlewarePassportJWT, async (req, res) => {
 });
 
 viewsRouter.get('/realtimeproducts', middlewarePassportJWT, (req, res) => {
-    const { user } = req.session;
-    delete user.password;
+    const { user } = req.user;
+    // delete user.password;
     res.render('realTimeProducts', {
-        user,            
+        user,
     });
 });
 
@@ -50,43 +51,45 @@ viewsRouter.get('/chat', middlewarePassportJWT, (req, res) => {
     res.render('chat');
 });
 
-viewsRouter.get('/register',  (req, res) => {
-	res.render('register', {
-		title: 'Registrar nuevo usuario',
-	});
+viewsRouter.get('/register', (req, res) => {
+    res.render('register', {
+        title: 'Registrar nuevo usuario',
+    });
 });
 viewsRouter.get('/registerError', (req, res) => {
-	res.render('registerError', {
-		title: 'Error al registrar nuevo usuario',
-	});
+    res.render('registerError', {
+        title: 'Error al registrar nuevo usuario',
+    });
 });
-viewsRouter.get('/loginError',  (req, res) => {
-	res.render('loginError', {
-		title: 'Error al iniciar sesión',
-	});
+viewsRouter.get('/loginError', (req, res) => {
+    res.render('loginError', {
+        title: 'Error al iniciar sesión',
+    });
 });
 
 viewsRouter.get('/login', (req, res) => {
-	res.render('login', {
-		title: 'Inicio de sesión',
-	});
+    res.render('login', {
+        title: 'Inicio de sesión',
+    });
 });
 
-/* viewsRouter.get('/', isAuth, (req, res) => {
-	const { user } = req.session;
-	delete user.password;
-	res.render('index', {
-		title: 'Perfil de Usuario',
-		user,
-	});
-}); */
+viewsRouter.get('/', middlewarePassportJWT, (req, res) => {
+
+    if (!req.user) {
+        res.render('login', {
+            title: 'Inicio de sesión',
+        });
+    } else {
+        res.redirect('/products');
+    }
+});
 
 viewsRouter.get('/profile', middlewarePassportJWT, (req, res) => {
-	
+
     res.render('profile', {
-		title: 'Perfil de Usuario',
-		user: req.user,
-	});
-}); 
+        title: 'Perfil de Usuario',
+        user: req.user,
+    });
+});
 
 export default viewsRouter;

@@ -50,7 +50,7 @@ const inicializePassport = () => {
                 if (user) {
                     return done(null, false, { message: 'El usuario ya existe' });
                 }
-                const hashedPassword = await hashPassword(password);
+                const hashedPassword = hashPassword(password);
                 const newUser = await userDAO.createUser({
                     first_name,
                     last_name,

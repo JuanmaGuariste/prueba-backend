@@ -13,6 +13,7 @@ import MongoStore from 'connect-mongo';
 import inicializePassport from './config/passport.config.js';
 import passport from 'passport';
 import cookieParser from 'cookie-parser';
+import sessionsRouter from './routers/sessions.router.js';
 //import {generateToken, authToken} from './middleware/jwt.middleware.js';
 	
 const app = express();
@@ -58,6 +59,7 @@ app.use('/', viewsRouter);
 app.use('/api/products', productsRouter);
 app.use('/api/carts', cartsRouter);
 app.use('/api/user', userRouter) ;
+app.use('/api/sessions', sessionsRouter) ;
 
 const webServer = app.listen(8080, () => {
 	console.log('Escuchando 8080');
