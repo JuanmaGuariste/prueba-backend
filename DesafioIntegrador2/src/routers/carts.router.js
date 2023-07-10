@@ -24,9 +24,7 @@ cartsRouter.get("/:cid", async (req, res) => {
 
 cartsRouter.post("/:cid/product/:pid", async (req, res) => {
     let cid = req.params.cid;      
-    let pid = req.params.pid;
-    console.log(cid)
-    console.log(pid)
+    let pid = req.params.pid; 
     try {
         let cart = await cartDAO.addProductToCart(pid, cid);
         res.status(201).send({ status: "success", payload: cart });
@@ -40,7 +38,7 @@ cartsRouter.delete("/:cid/product/:pid", async (req, res) => {
     let cid = req.params.cid;
     let pid = req.params.pid;
     try {
-        await cartDAO.deleteProductFromCart(pid, cid);
+        await cartDAO.deleteProductFromCart(pid, cid);       
         res.status(201).send({ status: "success", payload: pid });
     } catch (err) {
         res.status(500).send({ status: "error", error: err })

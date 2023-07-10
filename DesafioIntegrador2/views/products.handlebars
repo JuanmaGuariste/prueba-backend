@@ -3,6 +3,7 @@
     <p class="wellcome-text">Bienvenido, {{user.first_name}} {{user.last_name}}</p>
     <p class="wellcome-text">Email: {{user.email}}</p>
     <p class="wellcome-text">Rol: {{user.rol}}</p>
+    <p class="wellcome-text">Cart: {{user.cart}}</p>
     <div class='row d-flex justify-content-center'>
         {{#each products.docs}}
         <div class="card my-3 mx-2" style="width: 18rem;">
@@ -14,10 +15,13 @@
                 <p class="card-text">{{this.description}}</p>
                 <p class="card-text">Categoría: {{this.category}}</p>
                 <p class="card-text">ID: {{this._id}}</p>
+                <p class="card-text">ID: {{../user.cart}}</p>
                 <button class="btn btn-success my-3"
-                    onclick="addProductToCart('{{this._id}}', JSON.stringify({{user.cart}}))">Agregar al
+                    onclick="addProductToCart('{{this._id}}', '{{../user.cart}}')">Agregar
+                    al
                     carrito</button>
-                <button class="btn btn-danger" onclick="deleteProductFromCart('{{this._id}}')">Quitar del
+                <button class="btn btn-danger" onclick="deleteProductFromCart('{{this._id}}', '{{../user.cart}}')">Quitar
+                    del
                     carrito</button>
             </div>
         </div>

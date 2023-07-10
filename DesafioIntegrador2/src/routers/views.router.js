@@ -24,17 +24,16 @@ viewsRouter.get('/products', middlewarePassportJWT, async (req, res) => {
 
 
 viewsRouter.get("/carts/:cid", middlewarePassportJWT, async (req, res) => {
-    let id = req.params.cid;     
-    id = id.replace(/^'|'$/g, '');   
+    let id = req.params.cid.replace(/^'|'$/g, '');   
+    const user = req.user;
     try {
         let cart = await cartDAO.getCartById(id);
-        res.render('carts', { title: 'Cart',  cart });
-
-
-        // res.render('carts', {
-        //     cart,
-        //     user,
-        // });
+        res.render('carts',
+            {
+                title: 'Cart',
+                cart,
+                user,
+            });
     } catch (err) {
         res.status(500).send({ status: "error", error: err })
     }
@@ -42,7 +41,6 @@ viewsRouter.get("/carts/:cid", middlewarePassportJWT, async (req, res) => {
 
 viewsRouter.get('/realtimeproducts', middlewarePassportJWT, (req, res) => {
     const { user } = req.user;
-    // delete user.password;
     res.render('realTimeProducts', {
         user,
     });

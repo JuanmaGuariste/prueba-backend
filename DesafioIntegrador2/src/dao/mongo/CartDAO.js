@@ -43,7 +43,7 @@ class CartDAO {
         return await this.model.deleteOne({ _id: cid });
     }
 
-    async deleteProductFromCart(pid, cid) {
+    async deleteProductFromCart(pid, cid) { 
         return await this.model.findOneAndUpdate(
             { _id: cid },
             { $pull: { products: { product: pid } } },

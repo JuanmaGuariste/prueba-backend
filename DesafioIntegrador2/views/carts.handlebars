@@ -1,7 +1,7 @@
 <div><br /></div>
 <div class='container'>
 
-    <div class='row'>
+    <div class='row'>       
         {{#each cart.products}}
         <div class="card my-3 mx-1" style="width: 18rem;">
             <figure class="figure">
@@ -11,7 +11,9 @@
                 <h5 class="card-title">{{this.product.title}}</h5>
                 <p class="card-text">{{this.product.description}}</p>
                 <p class="card-text">Categoría: {{this.product.category}}</p>
-                <button class="btn btn-danger" onclick="deleteProductFromCart('{{this.product._id}}')">Quitar del
+                <button class="btn btn-danger"
+                    onclick="deleteProductFromCart('{{this.product._id}}', '{{../user.cart}}')">Quitar
+                    del
                     carrito</button>
             </div>
         </div>

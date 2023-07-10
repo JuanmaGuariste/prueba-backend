@@ -14,22 +14,7 @@ async function createCart() {
 		});
 }
 
-// async function getCartID() {
-// 	let cid = JSON.parse(localStorage.getItem('carrito'));
-// 	if (!cid) {
-// 		cid = await createCart();
-// 		localStorage.setItem('carrito', JSON.stringify(cid));
-// 	}
-// 	return cid
-// }
-
 async function addProductToCart(pid, cid) {
-	console.log("hola")
-	console.log(pid)
-	console.log(cid)
-	
-	
-	// let cid = await getCartID()
 	const response = await fetch(`http://localhost:8080/api/carts/${cid}/product/${pid}`, {
 		method: 'POST'
 	});
@@ -48,8 +33,7 @@ async function addProductToCart(pid, cid) {
 	}
 }
 
-async function deleteProductFromCart(pid) {
-	let cid = await getCartID();
+async function deleteProductFromCart(pid, cid) {
 	const response = await fetch(`http://localhost:8080/api/carts/${cid}/product/${pid}`, {
 		method: 'DELETE'
 	});
