@@ -7,10 +7,8 @@ import { hashPassword, comparePassword } from '../utils/encrypt.utils.js';
 import jwt from "passport-jwt";
 import { Strategy, ExtractJwt } from 'passport-jwt';
 
-
 const jwtStrategy = jwt.Strategy
 const jwtExtract = ExtractJwt;
-
 const LocalStrategy = local.Strategy;
 
 const inicializePassport = () => {
@@ -21,13 +19,15 @@ const inicializePassport = () => {
     }, async (accessToken, refreshToken, profile, done) => {
         try {
             let user = await userDAO.getUserByEmail(profile._json.email);
+            let newCart = await cartDAO.addCart({});  
             if (!user) {
                 let newUser = {
                     first_name: profile._json.name,
                     last_name: "",
-                    email: profile._json.email,
-                    password: "",
+                    email: profile._json.email,                 
+                    password: "", 
                     img: profile._json.avatar_url,
+                    cart: newCart._id,
                 }
                 user = await userDAO.createUser(newUser);
                 done(null, user)
@@ -82,37 +82,7 @@ const inicializePassport = () => {
             return done(null, user);
         }
     });
-
-   /*  passport.use("login", new LocalStrategy({ usernameField: "email" }, async (username, password, done) => {
-        try {
-            if (username === "adminCoder@coder.com" && password === "1234") {
-                const user = {
-                    first_name: "Coder",
-                    last_name: "House",
-                    email: username,
-                    password: password,
-                    img: "https://pbs.twimg.com/profile_images/1465705281279590405/1yiTdkKj_400x400.png",
-                    rol: "admin",
-                    _id: "coder",
-                };
-                return done(null, user);
-            } else {
-                const user = await userDAO.getUserByEmail(username);
-                if (!user) {
-                    return done(null, false, { message: 'Usuario no encontrado' });
-                }
-                if (!comparePassword(user, password)) {
-                    return done(null, false, { message: 'Dato incorrecto' });
-                }
-                // return done(null, user);
-                const token = generateToken(user);
-                res.status(200).send({ token });
-            }
-        } catch (err) {
-            return done(err);
-        }
-    })); */
-
+   
     passport.use(
 		'jwt',
 		new jwtStrategy(
