@@ -25,7 +25,8 @@ class CartDAO {
     }
 
     async addCart(cart) {
-        return await this.model.create(cart);
+        let cartNew = await this.model.create(cart);
+        return cartNew;
     }
 
     async updateCart(cid, cart) {

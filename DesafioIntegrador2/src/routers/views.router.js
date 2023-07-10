@@ -2,7 +2,7 @@ import { Router } from 'express';
 import productDAO from '../dao/mongo/ProductDAO.js';
 import cartDAO from '../dao/mongo/CartDAO.js';
 import { isAuth, isGuest } from '../middleware/auth.middleware.js';
-import { middlewarePassportJWT } from '../middleware/jwt.middleware.js';
+import { middlewarePassportJWT, authToken } from '../middleware/jwt.middleware.js';
 
 const viewsRouter = Router();
 
@@ -24,16 +24,17 @@ viewsRouter.get('/products', middlewarePassportJWT, async (req, res) => {
 
 
 viewsRouter.get("/carts/:cid", middlewarePassportJWT, async (req, res) => {
-    let id = req.params.cid;
-    const { user } = req.user;
-    delete user.password;
+    let id = req.params.cid;     
+    id = id.replace(/^'|'$/g, '');   
     try {
         let cart = await cartDAO.getCartById(id);
+        res.render('carts', { title: 'Cart',  cart });
 
-        res.render('carts', {
-            cart,
-            user,
-        });
+
+        // res.render('carts', {
+        //     cart,
+        //     user,
+        // });
     } catch (err) {
         res.status(500).send({ status: "error", error: err })
     }

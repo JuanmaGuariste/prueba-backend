@@ -24,7 +24,7 @@ const userSchema = new mongoose.Schema({
                 ref: "carts",
             }
         ],
-        default: [],        
+        default: "",        
     }
 });
 

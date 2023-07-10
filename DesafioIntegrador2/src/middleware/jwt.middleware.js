@@ -21,8 +21,7 @@ const authToken = (req, res, next) => {
 } 
 
 const middlewarePassportJWT = async (req, res, next) => {
-	passport.authenticate('jwt', { session: false }, (err, usr, info) => {
-        console.log(usr)
+	passport.authenticate('jwt', { session: false }, (err, usr, info) => {        
 		if (err) {
 			next(err);
 		}

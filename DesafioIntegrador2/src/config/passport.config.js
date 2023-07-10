@@ -2,6 +2,7 @@ import passport from 'passport';
 import GitHubStrategy from 'passport-github2';
 import local from 'passport-local';
 import userDAO from '../dao/mongo/UserDAO.js';
+import cartDAO from '../dao/mongo/CartDAO.js';
 import { hashPassword, comparePassword } from '../utils/encrypt.utils.js';
 import jwt from "passport-jwt";
 import { Strategy, ExtractJwt } from 'passport-jwt';
@@ -44,18 +45,21 @@ const inicializePassport = () => {
             usernameField: 'email',
             passReqToCallback: true
         }, async (req, username, password, done) => {
-            const { first_name, last_name, img } = req.body;
+            const { first_name, last_name, img, age } = req.body;
             try {
                 const user = await userDAO.getUserByEmail(username);
                 if (user) {
                     return done(null, false, { message: 'El usuario ya existe' });
                 }
                 const hashedPassword = hashPassword(password);
+                let newCart = await cartDAO.addCart({});             
                 const newUser = await userDAO.createUser({
                     first_name,
                     last_name,
                     email: username,
+                    age,
                     password: hashedPassword,
+                    cart: newCart._id,
                     img,
                 });
                 return done(null, newUser);
