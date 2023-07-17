@@ -1,5 +1,5 @@
 import productModel from '../models/products.model.js';
-
+//Persistencia - servicios - controlador - rutas - vistas
 class ProductDAO {
     constructor() {
         this.model = productModel;

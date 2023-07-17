@@ -15,7 +15,7 @@ import passport from 'passport';
 import cookieParser from 'cookie-parser';
 import sessionsRouter from './routers/sessions.router.js';
 //import {generateToken, authToken} from './middleware/jwt.middleware.js';
-	
+
 const app = express();
 let totalProducts = [];
 let messages = [];
