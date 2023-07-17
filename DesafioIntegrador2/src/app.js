@@ -14,7 +14,6 @@ import inicializePassport from './config/passport.config.js';
 import passport from 'passport';
 import cookieParser from 'cookie-parser';
 import sessionsRouter from './routers/sessions.router.js';
-//import {generateToken, authToken} from './middleware/jwt.middleware.js';
 	
 const app = express();
 let totalProducts = [];
@@ -30,7 +29,6 @@ app.set('view engine', 'handlebars');
 app.use(express.static('public'));
 
 app.use(cookieParser('B2zdY3B$pHmxW%'));
-//app.use(passport.session());
 inicializePassport(app);
 
 app.use(passport.initialize());
