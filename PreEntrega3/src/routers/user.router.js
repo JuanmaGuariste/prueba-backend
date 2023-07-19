@@ -1,9 +1,9 @@
 import { Router } from "express";
-import userDAO from "../dao/mongo/UserDAO.js";
 import { hashPassword, comparePassword } from "../utils/encrypt.utils.js";
 import passport from "passport";
 import jwt from 'jsonwebtoken';
 import bcrypt from "bcrypt";
+import usersController from "../controllers/users.controller.js";
 
 const userRouter = Router();
 

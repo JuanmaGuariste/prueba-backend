@@ -1,4 +1,4 @@
-import ChatsService from '../services/chats.services.js';
+import ChatsService from '../services/chats.service.js';
 import chatDAO from '../dao/mongo/ChatDAO.js';
 
 class ChatsController {

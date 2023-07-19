@@ -10,11 +10,13 @@ class UserDAO {
     }  
     
     async getUserByEmail(email) {
-        return await this.model.findOne({ email: email });
+        let user = await this.model.findOne({ email: email });
+        return user;
     }
 
     async createUser(user) {
-        return await this.model.create(user);
+        let newUser = await this.model.create(user);
+        return newUser;
     }
 
     async getUserById(id) {

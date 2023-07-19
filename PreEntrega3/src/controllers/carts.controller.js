@@ -1,4 +1,4 @@
-import CartsService from '../services/carts.services.js';
+import CartsService from '../services/carts.service.js';
 import cartDAO from '../dao/mongo/CartDAO.js';
 
 class CartsController {

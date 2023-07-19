@@ -1,4 +1,4 @@
-import UsersService from '../services/users.services.js';
+import UsersService from '../services/users.service.js';
 import userDAO from '../dao/mongo/UserDAO.js';
 
 class UsersController {

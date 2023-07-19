@@ -11,7 +11,7 @@ viewsRouter.get('/products', middlewarePassportJWT, async (req, res) => {
     const user = req.user;
     try {
 
-        let products = await productsController.getAllProducts(limit, page, category, status, sort);
+        let products = await productsController.getProducts(limit, page, category, status, sort);
         res.render('products', {
             products,
             user,

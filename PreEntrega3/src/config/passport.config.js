@@ -48,12 +48,14 @@ const inicializePassport = () => {
             const { first_name, last_name, img, age } = req.body;
             try {
                 const user = await usersController.getUserByEmail(username);
+               
                 if (user) {
+                    console.log("estoy en el IF")
                     return done(null, false, { message: 'El usuario ya existe' });
                 }
-                const hashedPassword = hashPassword(password);
-                let newCart = await cartsController.addCart({});             
-                const newUser = await usersController.createUser({
+                const hashedPassword = hashPassword(password);                
+                let newCart = await cartsController.addCart();                
+                let newUSer =  {
                     first_name,
                     last_name,
                     email: username,
@@ -61,9 +63,12 @@ const inicializePassport = () => {
                     password: hashedPassword,
                     cart: newCart._id,
                     img,
-                });
-                return done(null, newUser);
+                }         
+                const newUser2 = await usersController.createUser(newUSer);   
+                console.log(newUser2)
+                return done(null, newUser2);
             } catch (err) {
+                console.log("Sali pro catch")
                 return done(err);
             }
         })
