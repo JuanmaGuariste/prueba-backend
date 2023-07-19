@@ -37,47 +37,10 @@ userRouter.get(
 	}
 );
 
-/* userRouter.post(
-	"/auth",
-	passport.authenticate("login", { failureRedirect: '/loginError' }),
-	async (req, res) => {
-		if (!req.user) return res.status(400).send("Usuario no encontrado")
-		const user = req.user;
-		delete user.password;
-		req.session.user = user;
-		res.redirect('/products');
-	}) */
-
 userRouter.post('/logout', (req, res) => {
 	res.clearCookie('token');
 	res.redirect('/login');
 });
-
-
-/* userRouter.post('/login', async (req, res) => {
-	const { email, password } = req.body;
-	try {
-		const user = await userController.getUserByEmail(email);
-		if (!user) {
-			return res.redirect('/404');
-		}
-
-		if (!bcrypt.compareSync(password, user.password)) {
-			return res.redirect('/404');
-		}
-		console.log(user)
-		const token = jwt.sign({ user }, 'privatekey', { expiresIn: '1h' });
-		console.log(token)
-
-		res.cookie('token', token, {
-			httpOnly: true,
-			maxAge: 6000000,
-		}).redirect('/products');
-	} catch (err) {
-		console.log(err);
-		res.redirect('/error');
-	}
-}); */
 
 userRouter.post('/login', async (req, res) => {
 	const { email, password } = req.body;
@@ -99,11 +62,9 @@ userRouter.post('/login', async (req, res) => {
 		} else {
 			user = await usersController.getUserByEmail(email);
 			if (!user) {
-				//return res.redirect('/404');
 				return res.redirect('/registerError');
 			}
 			if (!bcrypt.compareSync(password, user.password)) {
-				//return res.redirect('/404');
 				return res.redirect('/registerError');
 			}
 		}
@@ -118,6 +79,5 @@ userRouter.post('/login', async (req, res) => {
 	}
 }
 );
-
 
 export default userRouter;
