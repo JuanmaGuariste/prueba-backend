@@ -1,8 +1,8 @@
 import passport from 'passport';
 import GitHubStrategy from 'passport-github2';
 import local from 'passport-local';
-import userDAO from '../dao/mongo/UserDAO.js';
-import cartDAO from '../dao/mongo/CartDAO.js';
+import usersController from '../controllers/users.controller.js';
+import cartsController from '../controllers/carts.controller.js';
 import { hashPassword, comparePassword } from '../utils/encrypt.utils.js';
 import jwt from "passport-jwt";
 import { Strategy, ExtractJwt } from 'passport-jwt';
@@ -20,7 +20,7 @@ const inicializePassport = () => {
         callbackURL: "http://localhost:8080/api/user/githubcallback"
     }, async (accessToken, refreshToken, profile, done) => {
         try {
-            let user = await userDAO.getUserByEmail(profile._json.email);
+            let user = await usersController.getUserByEmail(profile._json.email);
             if (!user) {
                 let newUser = {
                     first_name: profile._json.name,
@@ -29,7 +29,7 @@ const inicializePassport = () => {
                     password: "",
                     img: profile._json.avatar_url,
                 }
-                user = await userDAO.createUser(newUser);
+                user = await usersController.createUser(newUser);
                 done(null, user)
             } else {
                 done(null, user)
@@ -47,13 +47,13 @@ const inicializePassport = () => {
         }, async (req, username, password, done) => {
             const { first_name, last_name, img, age } = req.body;
             try {
-                const user = await userDAO.getUserByEmail(username);
+                const user = await usersController.getUserByEmail(username);
                 if (user) {
                     return done(null, false, { message: 'El usuario ya existe' });
                 }
                 const hashedPassword = hashPassword(password);
-                let newCart = await cartDAO.addCart({});             
-                const newUser = await userDAO.createUser({
+                let newCart = await cartsController.addCart({});             
+                const newUser = await usersController.createUser({
                     first_name,
                     last_name,
                     email: username,
@@ -77,7 +77,7 @@ const inicializePassport = () => {
         if (id === "coder") {
             return done(null, true);
         } else {
-            const user = await userDAO.getUserById(id);
+            const user = await usersController.getUserById(id);
             if (!user) return done(null, false, { message: 'Usuario no encontrado' });
             return done(null, user);
         }
@@ -97,7 +97,7 @@ const inicializePassport = () => {
                 };
                 return done(null, user);
             } else {
-                const user = await userDAO.getUserByEmail(username);
+                const user = await usersController.getUserByEmail(username);
                 if (!user) {
                     return done(null, false, { message: 'Usuario no encontrado' });
                 }

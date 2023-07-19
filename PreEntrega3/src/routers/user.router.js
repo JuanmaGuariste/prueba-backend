@@ -50,7 +50,7 @@ userRouter.post('/logout', (req, res) => {
 /* userRouter.post('/login', async (req, res) => {
 	const { email, password } = req.body;
 	try {
-		const user = await userDAO.getUserByEmail(email);
+		const user = await userController.getUserByEmail(email);
 		if (!user) {
 			return res.redirect('/404');
 		}
@@ -90,7 +90,7 @@ userRouter.post('/login', async (req, res) => {
                     _id: "coder",
                 };  
             } else {			
-				user = await userDAO.getUserByEmail(email);
+				user = await usersController.getUserByEmail(email);
 				if (!user) {
 					//return res.redirect('/404');
 					return res.redirect('/registerError');

@@ -12,7 +12,7 @@ export default class ProductsService {
 	}
 
 	deleteProduct(id) {
-		return this.dao.deleteToy(id);
+		return this.dao.deleteCart(id);
 	}
 
 	updateProduct(id, product) {

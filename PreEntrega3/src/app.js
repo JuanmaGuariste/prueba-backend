@@ -6,8 +6,8 @@ import { cartsRouter } from './routers/carts.router.js';
 import userRouter from './routers/user.router.js';
 import { Server } from 'socket.io';
 import mongoose from 'mongoose';
-import productDAO from './dao/mongo/ProductDAO.js';
-import chatDAO from './dao/mongo/ChatDAO.js';
+import productsController from './controllers/products.controller.js';
+import chatsController from './controllers/chats.controller.js';
 import session from 'express-session';
 import MongoStore from 'connect-mongo';
 import inicializePassport from './config/passport.config.js';
@@ -74,8 +74,8 @@ io.on('connection', async (socket) => {
 	let status = false;
 	let sort = false;
 	try {
-		totalProducts = await productDAO.getProducts(limit, page, category, status, sort)
-		messages = await chatDAO.getAllMessages()
+		totalProducts = await productsController.getProducts(limit, page, category, status, sort)
+		messages = await chatsController.getAllMessages()
 	} catch (err) {
 		console.log(err)
 	}
@@ -84,8 +84,8 @@ io.on('connection', async (socket) => {
 
 	socket.on('new-product', async (product) => {
 		try {
-			await productDAO.addProduct(product)
-			totalProducts = await productDAO.getProducts(limit, page, category, status, sort)
+			await productsController.addProduct(product)
+			totalProducts = await productsController.getProducts(limit, page, category, status, sort)
 		} catch (err) {
 			console.log(err)
 		}
@@ -94,8 +94,8 @@ io.on('connection', async (socket) => {
 
 	socket.on('delete-product', async (prodId) => {
 		try {
-			await productDAO.deleteProduct(prodId)
-			totalProducts = await productDAO.getProducts(limit, page, category, status, sort)
+			await productsController.deleteProduct(prodId)
+			totalProducts = await productsController.getProducts(limit, page, category, status, sort)
 		} catch (err) {
 			console.log(err)
 		}
@@ -105,8 +105,8 @@ io.on('connection', async (socket) => {
 	socket.emit('messages', messages);
 
 	socket.on('message', async (message) => {
-		await chatDAO.addMessage(message)
-		messages = await chatDAO.getAllMessages()
+		await chatsController.addMessage(message)
+		messages = await chatsController.getAllMessages()
 		io.emit('messages', messages);
 	});
 
