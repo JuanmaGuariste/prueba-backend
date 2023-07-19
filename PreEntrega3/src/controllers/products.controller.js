@@ -9,6 +9,9 @@ class ProductsController {
 	getProducts(limit, page, category, status, sort) {
 		return this.service.getProducts(limit, page, category, status, sort);
 	}
+	getAllProducts() {
+		return this.service.getAllProducts();
+	}
 
 	addProduct(product) {
 		return this.service.addProduct(product);

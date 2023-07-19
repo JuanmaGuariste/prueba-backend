@@ -5,7 +5,7 @@ class ProductDAO {
         this.model = productModel;
     }
 
-    async getAllProducts(limit = 10, page = 1, category = false, status = false, sort = false) {
+    async getProducts(limit = 10, page = 1, category = false, status = false, sort = false) {
         let filter = {}
         let options = {
             lean: true,
@@ -49,7 +49,7 @@ class ProductDAO {
         products.category = category;
         return products
     }
-    async getProducts() {
+    async getAllProducts() {
         return await this.model.find();
     }
 

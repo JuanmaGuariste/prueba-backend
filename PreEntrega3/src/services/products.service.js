@@ -4,15 +4,19 @@ export default class ProductsService {
 	}
 
 	getProducts(limit, page, category, status, sort) {
-		return this.dao.getAllProducts(limit, page, category, status, sort);
+		return this.dao.getProducts(limit, page, category, status, sort);
 	}
+
+	getAllProducts() {
+        return this.dao.getAllProducts();
+    }
 
 	addProduct(product) {
 		return this.dao.addProduct(product);
 	}
 
 	deleteProduct(id) {
-		return this.dao.deleteCart(id);
+		return this.dao.deleteProduct(id);
 	}
 
 	updateProduct(id, product) {

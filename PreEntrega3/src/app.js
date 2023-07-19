@@ -68,13 +68,13 @@ const webServer = app.listen(8080, () => {
 const io = new Server(webServer);
 
 io.on('connection', async (socket) => {
-	let limit = 10;
-	let page= 1;
-	let category = false;
-	let status = false;
-	let sort = false;
+	// let limit = 10;
+	// let page= 1;
+	// let category = false;
+	// let status = false;
+	// let sort = false;
 	try {
-		totalProducts = await productsController.getProducts(limit, page, category, status, sort)
+		totalProducts = await productsController.getAllProducts()
 		messages = await chatsController.getAllMessages()
 	} catch (err) {
 		console.log(err)
@@ -85,7 +85,8 @@ io.on('connection', async (socket) => {
 	socket.on('new-product', async (product) => {
 		try {
 			await productsController.addProduct(product)
-			totalProducts = await productsController.getProducts(limit, page, category, status, sort)
+			totalProducts = await productsController.getAllProducts()
+			console.log(totalProducts)
 		} catch (err) {
 			console.log(err)
 		}
@@ -95,7 +96,7 @@ io.on('connection', async (socket) => {
 	socket.on('delete-product', async (prodId) => {
 		try {
 			await productsController.deleteProduct(prodId)
-			totalProducts = await productsController.getProducts(limit, page, category, status, sort)
+			totalProducts = await productsController.getAllProducts()
 		} catch (err) {
 			console.log(err)
 		}

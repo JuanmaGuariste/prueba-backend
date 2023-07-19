@@ -21,14 +21,17 @@ const inicializePassport = () => {
     }, async (accessToken, refreshToken, profile, done) => {
         try {
             let user = await usersController.getUserByEmail(profile._json.email);
+            console.log("user: ", user)
             if (!user) {
+                let newCart = await cartsController.addCart(); 
                 let newUser = {
                     first_name: profile._json.name,
                     last_name: "",
-                    email: profile._json.email,
+                    email: profile._json.email,                    
                     password: "",
                     img: profile._json.avatar_url,
-                }
+                    cart: newCart._id,
+                }                
                 user = await usersController.createUser(newUser);
                 done(null, user)
             } else {
@@ -47,15 +50,13 @@ const inicializePassport = () => {
         }, async (req, username, password, done) => {
             const { first_name, last_name, img, age } = req.body;
             try {
-                const user = await usersController.getUserByEmail(username);
-               
+                const user = await usersController.getUserByEmail(username);               
                 if (user) {
-                    console.log("estoy en el IF")
                     return done(null, false, { message: 'El usuario ya existe' });
                 }
                 const hashedPassword = hashPassword(password);                
                 let newCart = await cartsController.addCart();                
-                let newUSer =  {
+                let userData =  {
                     first_name,
                     last_name,
                     email: username,
@@ -64,11 +65,9 @@ const inicializePassport = () => {
                     cart: newCart._id,
                     img,
                 }         
-                const newUser2 = await usersController.createUser(newUSer);   
-                console.log(newUser2)
-                return done(null, newUser2);
+                const newUser = await usersController.createUser(userData);   
+                return done(null, newUser);
             } catch (err) {
-                console.log("Sali pro catch")
                 return done(err);
             }
         })
@@ -87,36 +86,6 @@ const inicializePassport = () => {
             return done(null, user);
         }
     });
-
-   /*  passport.use("login", new LocalStrategy({ usernameField: "email" }, async (username, password, done) => {
-        try {
-            if (username === "adminCoder@coder.com" && password === "1234") {
-                const user = {
-                    first_name: "Coder",
-                    last_name: "House",
-                    email: username,
-                    password: password,
-                    img: "https://pbs.twimg.com/profile_images/1465705281279590405/1yiTdkKj_400x400.png",
-                    rol: "admin",
-                    _id: "coder",
-                };
-                return done(null, user);
-            } else {
-                const user = await usersController.getUserByEmail(username);
-                if (!user) {
-                    return done(null, false, { message: 'Usuario no encontrado' });
-                }
-                if (!comparePassword(user, password)) {
-                    return done(null, false, { message: 'Dato incorrecto' });
-                }
-                // return done(null, user);
-                const token = generateToken(user);
-                res.status(200).send({ token });
-            }
-        } catch (err) {
-            return done(err);
-        }
-    })); */
 
     passport.use(
 		'jwt',
