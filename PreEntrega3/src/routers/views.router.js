@@ -1,7 +1,6 @@
 import { Router } from 'express';
 import cartsController from '../controllers/carts.controller.js';
-import { isAuth, isGuest } from '../middleware/auth.middleware.js';
-import { middlewarePassportJWT, authToken } from '../middleware/jwt.middleware.js';
+import { middlewarePassportJWT} from '../middleware/jwt.middleware.js';
 import productsController from '../controllers/products.controller.js';
 
 const viewsRouter = Router();

@@ -1,5 +1,4 @@
 import { Router } from "express";
-import { hashPassword, comparePassword } from "../utils/encrypt.utils.js";
 import passport from "passport";
 import jwt from 'jsonwebtoken';
 import bcrypt from "bcrypt";
@@ -73,7 +72,6 @@ userRouter.post('/login', async (req, res) => {
 			httpOnly: true,
 			maxAge: 6000000,
 		}).redirect('/products');
-
 	} catch (err) {
 		res.redirect('/registerError');
 	}
