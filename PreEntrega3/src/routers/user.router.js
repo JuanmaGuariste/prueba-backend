@@ -3,6 +3,7 @@ import passport from "passport";
 import jwt from 'jsonwebtoken';
 import bcrypt from "bcrypt";
 import usersController from "../controllers/users.controller.js";
+import enviroment from "../config/enviroment.js";
 
 const userRouter = Router();
 
@@ -46,7 +47,7 @@ userRouter.post('/login', async (req, res) => {
 
 	let user = {};
 	try {
-		if (email === "adminCoder@coder.com" && password === "1234") {
+		if (email === enviroment.ADMIN_NAME && password === enviroment.ADMIN_PASSWORD) {
 			user = {
 				first_name: "Coder",
 				last_name: "House",
