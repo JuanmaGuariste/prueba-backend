@@ -22,7 +22,6 @@ class UserDAO {
     async getUserById(id) {
         return await this.model.findById(id);
     }
-
 }
 
 const userDAO = new UserDAO();

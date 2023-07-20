@@ -15,12 +15,10 @@ import passport from 'passport';
 import cookieParser from 'cookie-parser';
 import sessionsRouter from './routers/sessions.router.js';
 import enviroment from './config/enviroment.js';
-//import {generateToken, authToken} from './middleware/jwt.middleware.js';
 
 const app = express();
 let totalProducts = [];
 let messages = [];
-// console.log(enviroment)
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -32,12 +30,10 @@ app.set('view engine', 'handlebars');
 app.use(express.static('public'));
 
 app.use(cookieParser('B2zdY3B$pHmxW%'));
-//app.use(passport.session());
 inicializePassport(app);
 
 app.use(passport.initialize());
 
-// mongoose.connect(enviroment.MONGO_URL);
 mongoose.connect(enviroment.MONGO_URL);
 
 app.use(
@@ -61,21 +57,12 @@ app.use('/api/carts', cartsRouter);
 app.use('/api/user', userRouter) ;
 app.use('/api/sessions', sessionsRouter) ;
 
-// const webServer = app.listen(enviroment.PORT, () => {
-// 	console.log(`Escuchando puerto ${enviroment.PORT}`);
-// });
-
 const webServer = app.listen(enviroment.PORT, () => {
 	console.log(`Escuchando puerto ${enviroment.PORT}`);
 });
 const io = new Server(webServer);
 
 io.on('connection', async (socket) => {
-	// let limit = 10;
-	// let page= 1;
-	// let category = false;
-	// let status = false;
-	// let sort = false;
 	try {
 		totalProducts = await productsController.getAllProducts()
 		messages = await chatsController.getAllMessages()

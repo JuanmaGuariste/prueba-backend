@@ -3,14 +3,12 @@ import GitHubStrategy from 'passport-github2';
 import local from 'passport-local';
 import usersController from '../controllers/users.controller.js';
 import cartsController from '../controllers/carts.controller.js';
-import { hashPassword, comparePassword } from '../utils/encrypt.utils.js';
+import { hashPassword} from '../utils/encrypt.utils.js';
 import jwt from "passport-jwt";
-import { Strategy, ExtractJwt } from 'passport-jwt';
-
+import { ExtractJwt } from 'passport-jwt';
 
 const jwtStrategy = jwt.Strategy
 const jwtExtract = ExtractJwt;
-
 const LocalStrategy = local.Strategy;
 
 const inicializePassport = () => {

@@ -21,7 +21,6 @@ viewsRouter.get('/products', middlewarePassportJWT, async (req, res) => {
     }
 });
 
-
 viewsRouter.get("/carts/:cid", middlewarePassportJWT, async (req, res) => {
     let id = req.params.cid.replace(/^'|'$/g, '');   
     const user = req.user;
@@ -54,11 +53,13 @@ viewsRouter.get('/register', (req, res) => {
         title: 'Registrar nuevo usuario',
     });
 });
+
 viewsRouter.get('/registerError', (req, res) => {
     res.render('registerError', {
         title: 'Error al registrar nuevo usuario',
     });
 });
+
 viewsRouter.get('/loginError', (req, res) => {
     res.render('loginError', {
         title: 'Error al iniciar sesión',
