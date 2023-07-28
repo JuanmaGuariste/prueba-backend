@@ -1,6 +1,6 @@
 import cartModel from "../models/carts.model.js";
 
-class CartDAO {
+class CartMongoDAO {
     constructor() {
         this.model = cartModel;
     }
@@ -58,14 +58,14 @@ class CartDAO {
         );
     }
     
-    async updateCart(cid, prod) {
-        let cart = await this.model.findOne({ _id: cid });
-        cart.products = [];
-        for (let i = 0; i < prod.length; i++){
-            cart.products.push(prod[i]);
-        }
-        return await this.model.updateOne({ _id: cid }, cart);      
-    }
+    // async updateCart(cid, prod) {
+    //     let cart = await this.model.findOne({ _id: cid });
+    //     cart.products = [];
+    //     for (let i = 0; i < prod.length; i++){
+    //         cart.products.push(prod[i]);
+    //     }
+    //     return await this.model.updateOne({ _id: cid }, cart);      
+    // }
     
     async updateProductInCart(pid, cid, newCant) {
         return await this.model.findOneAndUpdate(
@@ -76,6 +76,6 @@ class CartDAO {
     }
 }
 
-const cartDAO = new CartDAO();
+const cartMongoDAO = new CartMongoDAO();
 
-export default cartDAO;
+export default cartMongoDAO;

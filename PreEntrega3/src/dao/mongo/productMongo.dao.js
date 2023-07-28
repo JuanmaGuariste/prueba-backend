@@ -1,6 +1,6 @@
 import productModel from '../models/products.model.js';
 //Persistencia - servicios - controlador - rutas - vistas
-class ProductDAO {
+class ProductMongoDAO {
     constructor() {
         this.model = productModel;
     }
@@ -76,6 +76,6 @@ class ProductDAO {
     }
 }
 
-const productDAO = new ProductDAO();
+const productMongoDAO = new ProductMongoDAO();
 
-export default productDAO;
+export default productMongoDAO;

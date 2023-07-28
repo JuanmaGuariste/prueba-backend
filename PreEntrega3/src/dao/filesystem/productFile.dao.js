@@ -1,7 +1,7 @@
 import fs from 'fs';
 const FAIL = 0;
 
-export default class ProductController {
+class ProductFileDAO {
     #id = 0;
 
     constructor(path) {
@@ -53,14 +53,20 @@ export default class ProductController {
         } catch (err) {
             console.log('Error: No se pudo agregar el producto');
         }
-    }
-
-    #getID() {
-        this.#id++;
-        return this.#id;
-    }
+    }    
 
     async getProducts() {
+        try {
+            const actualProducts = await fs.promises.readFile(
+                this.path,
+                'utf-8'
+            );
+            return JSON.parse(actualProducts);
+        } catch (err) {
+            console.log('Error: No es posible obtener los productos');
+        }
+    }
+    async getAllProducts() {
         try {
             const actualProducts = await fs.promises.readFile(
                 this.path,
@@ -108,8 +114,7 @@ export default class ProductController {
             );
 
             if (productIndex === -1) {
-                console.log(`Error: El producto con ID "${idProduct}" no existe.`);
-                return FAIL;
+                throw new Error('Missing required fields');
             }
 
             const newProduct = {
@@ -141,8 +146,7 @@ export default class ProductController {
             );
 
             if (productIndex === -1) {
-                console.log(`Error: El producto con ID "${idProduct}" no existe.`);
-                return FAIL;
+                throw new Error('Missing required fields');
             }
 
             const filteredProducts = actualProducts.filter((prod) => {
@@ -160,4 +164,13 @@ export default class ProductController {
             console.log('Error: No se pudo eliminar el producto.');
         }
     }
+
+    #getID() {
+        this.#id++;
+        return this.#id;
+    }
 }
+
+const productFileDAO = new ProductFileDAO();
+
+export default productFileDAO

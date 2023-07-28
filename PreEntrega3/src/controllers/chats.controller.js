@@ -1,9 +1,9 @@
 import ChatsService from '../services/chats.service.js';
-import chatDAO from '../dao/mongo/ChatDAO.js';
+import chatMongoDAO from '../dao/mongo/ChatMongo.dao.js';
 
 class ChatsController {
 	constructor() {
-		this.service = new ChatsService(chatDAO);
+		this.service = new ChatsService(chatMongoDAO);
 	}
     
 	getAllMessages() {

@@ -1,9 +1,9 @@
 import UsersService from '../services/users.service.js';
-import userDAO from '../dao/mongo/UserDAO.js';
+import userMongoDAO from '../dao/mongo/UserMongo.dao.js';
 
 class UsersController {
 	constructor() {
-		this.service = new UsersService(userDAO);
+		this.service = new UsersService(userMongoDAO);
 	}
     
     getAllUsers() {

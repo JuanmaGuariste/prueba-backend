@@ -1,6 +1,6 @@
 import chatModel from "../models/chat.model.js";
 
-class ChatDAO {
+class ChatMongoDAO {
     constructor() {
         this.model = chatModel;
     }
@@ -14,6 +14,6 @@ class ChatDAO {
     }
 }
 
-const chatDAO = new ChatDAO();
+const chatMongoDAO = new ChatMongoDAO();
 
-export default chatDAO;
+export default chatMongoDAO;
