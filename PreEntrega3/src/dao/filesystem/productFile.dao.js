@@ -4,10 +4,10 @@ const FAIL = 0;
 class ProductFileDAO {
     #id = 0;
 
-    constructor(path) {
-        this.path = path;
+    constructor() {
+        this.path = './products.json';
         if (!fs.existsSync(this.path)) {
-            fs.writeFileSync(this.path, JSON.stringify([]));
+            fs.writeFileSync('./products.json', JSON.stringify([]));
         } else {
             const actualProducts = JSON.parse(fs.readFileSync(this.path, 'utf-8'));
             if (actualProducts.length > 0) {

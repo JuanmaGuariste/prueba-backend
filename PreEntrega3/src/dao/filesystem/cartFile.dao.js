@@ -3,8 +3,8 @@ const FAIL = 0;
 
 class CartFileDAO {
     #id = 0;
-    constructor(path) {
-        this.path = path;
+    constructor() {
+        this.path = './carts.json';
         if (!fs.existsSync(this.path)) {
             fs.writeFileSync(this.path, JSON.stringify([]));
         } else {

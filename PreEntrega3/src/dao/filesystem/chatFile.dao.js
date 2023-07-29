@@ -2,8 +2,9 @@ import fs from 'fs';
 
 
 class ChatFileDAO {
+    #id = 0;
     constructor() {
-        this.path = path;
+        this.path = './chats.json';
         if (!fs.existsSync(this.path)) {
             fs.writeFileSync(this.path, JSON.stringify([]));
         } else {

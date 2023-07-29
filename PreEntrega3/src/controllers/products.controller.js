@@ -1,9 +1,10 @@
 import ProductsService from '../services/products.service.js';
-import productMongoDAO from '../dao/mongo/ProductMongo.dao.js';
-
+//import productMongoDAO from '../dao/mongo/productMongo.dao.js';
+import {Products} from '../dao/factory.js'
+let products = Products
 class ProductsController {
 	constructor() {
-		this.service = new ProductsService(productMongoDAO);
+		this.service = new ProductsService(products);
 	}
 
 	getProducts(limit, page, category, status, sort) {

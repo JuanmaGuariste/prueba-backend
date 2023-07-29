@@ -2,8 +2,8 @@ import fs from 'fs';
 
 class UserFileDAO {
     #id = 0;
-    constructor(path) {
-        this.path = path;
+    constructor() {
+        this.path = './users.json';
         if (!fs.existsSync(this.path)) {
             fs.writeFileSync(this.path, JSON.stringify([]));
         } else {
@@ -45,8 +45,14 @@ class UserFileDAO {
                 this.path,
                 'utf-8'
             ));
+            console.log(user)
             users.push(user);
-            fs.writeFileSync(this.filename, JSON.stringify(users, null, 2));
+           // fs.writeFileSync(this.filename, JSON.stringify(users, null, 2));
+            await fs.promises.writeFile(
+                this.path,
+                JSON.stringify(users)
+            );
+
             return user;
         } catch (err) {
             throw new Error('Error al crear el usuario');
