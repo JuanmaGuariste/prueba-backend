@@ -1,9 +1,9 @@
 import CartsService from '../services/carts.service.js';
-import cartDAO from '../dao/mongo/CartDAO.js';
+import cartMongoDAO from '../dao/mongo/CartMongo.dao.js';
 
 class CartsController {
 	constructor() {
-		this.service = new CartsService(cartDAO);
+		this.service = new CartsService(cartMongoDAO);
 	}
 
 	getCarts() {

@@ -9,7 +9,7 @@ const userRouter = Router();
 
 userRouter.post(
 	'/',
-	passport.authenticate('register', { failureRedirect: '/registerError' }),
+	passport.authenticate('register', { failureRedirect: '/registerError' }),	
 	async (req, res) => {
 		res.redirect('/products');
 	}
@@ -27,7 +27,6 @@ userRouter.get(
 	(req, res) => {
 		req.session.user = req.user;
 		let user = req.session.user
-		console.log("Req session: ", req.session.user)
 		const token = jwt.sign({ user }, 'privateKey', { expiresIn: '1h' });
 		res.cookie('token', token, {
 			httpOnly: true,

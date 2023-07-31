@@ -1,0 +1,207 @@
+.form-container {
+	display: flex;
+	gap: 20px;
+	border: 1px solid black;
+}
+
+.form-wrapper {
+	flex: 1;
+	margin-left: auto;
+}
+
+#add-product-form,
+#delete-product-form {
+	margin-left: 10%;
+}
+
+.form-title {
+	font-size: 24px;
+	font-weight: bold;
+	margin-left: 10%;
+}
+
+.product-form {
+	margin-bottom: 20px;
+}
+
+.product-form input,
+.product-form select {
+	display: block;
+	margin-bottom: 10px;
+	width: 300px;
+	padding: 5px;
+}
+
+.product-form button {
+	padding: 5px 10px;
+	background-color: #007bff;
+	color: #fff;
+	border: none;
+	cursor: pointer;
+	margin-left: 115px;
+}
+
+#historial {
+	margin-top: 20px;
+}
+
+#totalProducts {
+	font-weight: bold;
+}
+
+.title {
+	font-size: 24px;
+	font-weight: bold;
+}
+
+.product-list {
+	list-style-type: none;
+	padding: 0;
+}
+
+.product-list li {
+	margin-bottom: 20px;
+	border: 1px solid #ccc;
+	padding: 10px;
+}
+
+.product-list p {
+	margin: 5px 0;
+}
+
+
+.product-container {
+	border: 1px solid #ccc;
+	padding: 10px;
+	margin-bottom: 10px;
+}
+
+.product-container h2 {
+	font-size: 18px;
+	font-weight: bold;
+	margin-bottom: 5px;
+}
+
+.product-container p {
+	margin: 5px 0;
+}
+
+input {
+	width: 100%;
+	height: 40px;
+	border: 1px solid #00b658;
+	border-radius: 5px;
+	padding: 0 10px;
+	font-size: 16px;
+	box-sizing: border-box;
+	margin-bottom: 10px;
+}
+
+#messages {
+	width: 100%;
+	height: calc(100vh - 140px);
+	border: 1px solid #00b658;
+	border-radius: 5px;
+	padding: 0 10px;
+	font-size: 16px;
+	box-sizing: border-box;
+	margin-bottom: 10px;
+	overflow-y: scroll;
+}
+
+
+:root {
+	--gradient: linear-gradient(135deg, #008bf6, #004f8b);
+	--p-color: #008bf6;
+	--radius: 25px;
+	--shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+	--shadow-hover: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+body {
+	background: var(--gradient);
+}
+
+section {
+	margin: 100px;
+}
+
+.bg-light {
+	background: #fff;
+	box-shadow: var(--shadow);
+}
+
+.login-section {
+	margin: 50px 20px;
+	border-radius: var(--radius);
+}
+
+.navbar {
+	margin: 10px;
+	border-radius: var(--radius);
+}
+
+.form-control {
+	margin-top: 20px;
+	margin-bottom: 20px;
+	border-radius: var(--radius);
+	border: 0px;
+	border-bottom: 1px solid var(--p-color);
+}
+
+.btn-primary {
+	background: var(--gradient);
+	border-radius: var(--radius);
+	border: 0;
+}
+
+.btn-outline-danger {
+	border-radius: var(--radius);
+}
+
+
+
+.user-form {
+	display: flex;
+	align-items: center;
+}
+
+.user-info {
+	margin-right: 10px;
+}
+
+
+
+.custom-navbar {
+	max-width: 90%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.band-name {
+	color: #008bf6;
+	font: 1.2em sans-serif;
+}
+
+.custom-img {
+	max-height: 30px;
+}
+
+.wellcome-text {
+	color: #333;
+	/* Color de texto */
+	font-family: Arial, sans-serif;
+	/* Fuente */
+	font-size: 16x;
+	/* Tamaño de fuente */
+	margin-bottom: 2px;
+	/* Espacio inferior */
+	text-align: start;
+	/* Alineación de texto */
+	color: #fff
+}
+
+.btn-github{
+	color: #fff;
+	background: #333;
+}

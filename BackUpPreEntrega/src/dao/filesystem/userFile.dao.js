@@ -44,15 +44,14 @@ class UserFileDAO {
             const users = JSON.parse(await fs.promises.readFile(
                 this.path,
                 'utf-8'
-            ));
-            console.log(user)
+            ));            
             users.push(user);
            // fs.writeFileSync(this.filename, JSON.stringify(users, null, 2));
             await fs.promises.writeFile(
                 this.path,
                 JSON.stringify(users)
             );
-
+            console.log("user: ", user)
             return user;
         } catch (err) {
             throw new Error('Error al crear el usuario');
