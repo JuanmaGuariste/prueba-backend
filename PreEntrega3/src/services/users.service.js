@@ -1,3 +1,5 @@
+import UserDTO from "../dto/users.dto.js";
+
 export default class ProductsService {
 	constructor(dao) {
 		this.dao = dao;
@@ -11,8 +13,9 @@ export default class ProductsService {
 		return this.dao.createUser(user);
 	}
 	
-    getUserById(id) {
-		return this.dao.getUserById(id);
+    async getUserById(id) {
+		let user =  await this.dao.getUserById(id);
+		return new UserDTO(user)		 
 	}
 
 	getUserByEmail(email) {		

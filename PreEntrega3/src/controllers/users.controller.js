@@ -14,8 +14,8 @@ class UsersController {
 		return this.service.createUser(user);
 	}
 	
-    getUserById(id) {
-		return this.service.getUserById(id);
+   async getUserById(id) {
+		return await this.service.getUserById(id);
 	}
 
 	getUserByEmail(email) {		

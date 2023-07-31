@@ -2,6 +2,7 @@ import { Router } from 'express';
 import cartsController from '../controllers/carts.controller.js';
 import { middlewarePassportJWT} from '../middleware/jwt.middleware.js';
 import productsController from '../controllers/products.controller.js';
+import usersController from '../controllers/users.controller.js';
 
 const viewsRouter = Router();
 
@@ -83,11 +84,16 @@ viewsRouter.get('/', middlewarePassportJWT, (req, res) => {
     }
 });
 
-viewsRouter.get('/profile', middlewarePassportJWT, (req, res) => {
-
+viewsRouter.get('/current', middlewarePassportJWT, async (req, res) => {
+    let user = await usersController.getUserById(req.user._id);
     res.render('profile', {
         title: 'Perfil de Usuario',
-        user: req.user,
+        img: user.img,
+        name: user.first_name,
+        last_name: user.last_name,
+        age: user.age,
+        email: user.email,
+        rol: user.rol,
     });
 });
 
