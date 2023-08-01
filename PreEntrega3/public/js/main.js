@@ -73,6 +73,12 @@ function deleteProduct() {
 	socket.emit('delete-product', prodId);
 }
 
+async function createTicket(cid){
+	const response = await fetch(`http://localhost:8080/api/carts/${cid}/purchase`, {
+		method: 'POST'
+	});
+}
+
 socket.on('totalProducts', (data) => {
 	const html = data.map((elem, index) => {
 		return `<div class="product-container">
@@ -90,4 +96,3 @@ socket.on('totalProducts', (data) => {
 	});
 	document.getElementById('totalProducts').innerHTML = html.join('');
 });
-

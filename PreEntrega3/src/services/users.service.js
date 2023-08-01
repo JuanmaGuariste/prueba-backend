@@ -5,12 +5,12 @@ export default class ProductsService {
 		this.dao = dao;
 	}
 
-	getAllUsers() {
-		return this.dao.getAllUsers();
+	async getAllUsers() {
+		return await this.dao.getAllUsers();
 	}
 
-	createUser(user) {
-		return this.dao.createUser(user);
+	async createUser(user) {
+		return await this.dao.createUser(user);
 	}
 	
     async getUserById(id) {
@@ -22,8 +22,8 @@ export default class ProductsService {
 		}		 
 	}
 
-	getUserByEmail(email) {		
-		return this.dao.getUserByEmail(email);
+	async getUserByEmail(email) {		
+		return await this.dao.getUserByEmail(email);
 	}
 }
 
