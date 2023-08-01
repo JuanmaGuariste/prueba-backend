@@ -14,8 +14,12 @@ export default class ProductsService {
 	}
 	
     async getUserById(id) {
-		let user =  await this.dao.getUserById(id);
-		return new UserDTO(user)		 
+		if (id === "coder"){						
+			return null
+		}else {
+			let user =  await this.dao.getUserById(id);			
+			return new UserDTO(user)
+		}		 
 	}
 
 	getUserByEmail(email) {		

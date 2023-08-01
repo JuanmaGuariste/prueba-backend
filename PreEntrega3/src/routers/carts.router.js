@@ -1,5 +1,7 @@
 import { Router } from 'express';
 import cartsController from '../controllers/carts.controller.js';
+import { isUser } from '../middleware/auth.middleware.js';
+import { middlewarePassportJWT } from '../middleware/jwt.middleware.js';
 
 const cartsRouter = Router();
 
@@ -22,9 +24,9 @@ cartsRouter.get("/:cid", async (req, res) => {
     }
 });
 
-cartsRouter.post("/:cid/product/:pid", async (req, res) => {
-    let cid = req.params.cid;      
-    let pid = req.params.pid; 
+cartsRouter.post("/:cid/product/:pid",  async (req, res) => {
+    let cid = req.params.cid;
+    let pid = req.params.pid;
     try {
         let cart = await cartsController.addProductToCart(pid, cid);
         res.status(201).send({ status: "success", payload: cart });
@@ -38,7 +40,7 @@ cartsRouter.delete("/:cid/product/:pid", async (req, res) => {
     let cid = req.params.cid;
     let pid = req.params.pid;
     try {
-        await cartsController.deleteProductFromCart(pid, cid);       
+        await cartsController.deleteProductFromCart(pid, cid);
         res.status(201).send({ status: "success", payload: pid });
     } catch (err) {
         res.status(500).send({ status: "error", error: err })
@@ -70,7 +72,7 @@ cartsRouter.put("/:cid/product/:pid", async (req, res) => {
     let cid = req.params.cid;
     let newCant = parseInt(req.body.cant)
     try {
-        await cartsController.updateProductInCart(pid, cid, newCant );
+        await cartsController.updateProductInCart(pid, cid, newCant);
         res.status(201).send({ status: "success", payload: cid });
     } catch (err) {
         res.status(500).send({ status: "error", error: err })

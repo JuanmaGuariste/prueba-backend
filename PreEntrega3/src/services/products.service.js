@@ -7,8 +7,8 @@ export default class ProductsService {
 		return this.dao.getProducts(limit, page, category, status, sort);
 	}
 
-	getAllProducts() {
-        return this.dao.getAllProducts();
+	async getAllProducts() {
+        return await this.dao.getAllProducts();
     }
 
 	addProduct(product) {

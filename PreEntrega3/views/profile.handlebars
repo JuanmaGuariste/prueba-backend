@@ -2,8 +2,8 @@
 	<div class='row bg-light login-section'>
 		<div class='col-4'>
 
-			{{#if img}}
-			<img src='{{img}}' alt='logo' class='img-fluid my-2' />
+			{{#if user.img}}
+			<img src='{{user.img}}' alt='logo' class='img-fluid my-2' />
 			{{else}}
 			<img src="https://cdn.pixabay.com/photo/2017/02/25/22/04/user-icon-2098873_1280.png" alt='logo'
 				class='img-fluid my-2' style="height: 90%;" />
@@ -11,14 +11,11 @@
 		</div>
 		<div class='col-8' style='padding: 50px 20px;'>
 			<h1>Hola, {{user.first_name}} {{user.last_name}}</h1>
-
 			<p>Datos personales</p>			
-			<ul>
-				{{#if name}}<li><b>Nombre: </b>{{name}}</li>{{/if}}
-				{{#if last_name}}<li><b>Apellido: </b>{{last_name}}</li>{{/if}}
-				{{#if email}}<li><b>Correo: </b>{{email}}</li>{{/if}}
-				{{#if age}}<li><b>Edad: </b>{{age}}</li>{{/if}}
-				{{#if rol}}<li><b>Rol: </b>{{rol}}</li>{{/if}}
+			<ul>				
+				{{#if user.email}}<li><b>Correo: </b>{{user.email}}</li>{{/if}}
+				{{#if user.age}}<li><b>Edad: </b>{{user.age}}</li>{{/if}}
+				{{#if user.rol}}<li><b>Rol: </b>{{user.rol}}</li>{{/if}}
 			</ul>
 		</div>
 	</div>
