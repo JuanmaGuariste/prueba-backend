@@ -10,40 +10,12 @@ class TicketsController {
 
 	async getTickets() {
 		return await this.service.getTickets();
-	}
-
-	// async addTicket(cid) {		
-	//     let cart = await cartsController.getCartById(cid);
-	// 	let totalProducts = [];
-	//console.log(cart.products)
-	//cart.products.forEach(el => {			
-	// console.log(el.product)
-	// console.log(el.cant)
-	//let prod = await productsController.getProductById(el.product.id);
-
-	// console.log(el.product);
-	// if (el.product.stock)	
-
-	// let cart = await cartsController.getCartById(cid);
-	// let totalProducts = [];
-	// let prod = {};
-	// cart.products.forEach(el => {		
-	// 	prod.id = el.product._id;
-	// 	prod.cant = el.cant;
-	// 	totalProducts.push(prod);
-	// 	console.log(totalProducts)						
-	// });
-	// let prr = await productsController.getProductById(totalProducts[1].id);
-	// console.log(prr)
-	// return cart
-	// 	});
-	//     return cart
-	// }   
+	}   
 
 	async addTicket(cid, user) {
 		let productsOk = [];
 		let productsNotOk = [];
-		let prodAux = {};
+		let totalPrice = 0;
 
 		let cart = await cartsController.getCartById(cid);
 		for (const el of cart.products) {
@@ -51,6 +23,7 @@ class TicketsController {
 			if (prod.stock - el.cant >= 0) {
 				prod.stock -= el.cant;
 				await productsController.updateProduct(prod._id, prod);
+				await cartsController.deleteProductFromCart(el.product._id, cid)				
 				let prodAuxOk = {
 					title: prod.title,
 					cant: el.cant,
@@ -66,23 +39,18 @@ class TicketsController {
 				};
 				productsNotOk.push(prodAuxNotOk);	
 			}			
-		}
-		let totalPrice = 0;
+		}		
 		productsOk.forEach(el => {
 			totalPrice += el.cant * el.price
-		})		
-
+		})	
 		let ticket = {
-			code: "1",
+			//code: "3",//TODO: Generar codigo aleatorio y único
 			amount: totalPrice,
 			purchaser: user.email,
 			
-		}
-		console.log("ticket",ticket)
-		//await this.service.addTicket(cart._id, productsOk);
-		console.log("Se pudo comprar", productsOk)
-		console.log("No se pudo comprar", productsNotOk)
-		return cart
+		}		
+		await this.service.addTicket(ticket);		
+		return ticket
 	}
 }
 
