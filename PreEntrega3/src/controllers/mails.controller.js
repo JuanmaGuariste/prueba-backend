@@ -38,7 +38,7 @@ class MailsController {
             if (error) {
                 console.log(error);
             }
-            console.log('Email sent: ' + info.response);
+            //console.log('Email sent: ' + info.response);
         });       
 
 		return ticket
