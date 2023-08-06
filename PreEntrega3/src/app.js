@@ -16,7 +16,7 @@ import cookieParser from 'cookie-parser';
 import sessionsRouter from './routers/sessions.router.js';
 import enviroment from './config/enviroment.js';
 import { mailsRouter } from './routers/mails.router.js';
-
+import { mockingProductsRouter } from './routers/mockingproducts.router.js';
 const app = express();
 let totalProducts = [];
 let messages = [];
@@ -55,9 +55,10 @@ app.use(
 app.use('/', viewsRouter);
 app.use('/api/products', productsRouter);
 app.use('/api/carts', cartsRouter);
-app.use('/api/user', userRouter) ;
-app.use('/api/sessions', sessionsRouter) ;
-app.use('/api/mails', mailsRouter) ;
+app.use('/api/user', userRouter);
+app.use('/api/sessions', sessionsRouter);
+app.use('/api/mails', mailsRouter);
+app.use('/api/mockingproducts', mockingProductsRouter);
 
 const webServer = app.listen(enviroment.PORT, () => {
 	console.log(`Escuchando puerto ${enviroment.PORT}`);
