@@ -1,7 +1,7 @@
-const Errors = {
+const EErrors = {
     ROUTING_ERROR: 1,
     INVALID_TYPE: 2,
     DATABASE_ERROR: 3,
 }
 
-export default Error
+export default EErrors

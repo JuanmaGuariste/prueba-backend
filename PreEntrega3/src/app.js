@@ -17,6 +17,8 @@ import sessionsRouter from './routers/sessions.router.js';
 import enviroment from './config/enviroment.js';
 import { mailsRouter } from './routers/mails.router.js';
 import { mockingProductsRouter } from './routers/mockingproducts.router.js';
+import { errorsManagerMiddleware } from './middleware/errorsManager.middleware.js';
+
 const app = express();
 let totalProducts = [];
 let messages = [];
@@ -59,6 +61,8 @@ app.use('/api/user', userRouter);
 app.use('/api/sessions', sessionsRouter);
 app.use('/api/mails', mailsRouter);
 app.use('/api/mockingproducts', mockingProductsRouter);
+app.use(errorsManagerMiddleware);
+
 
 const webServer = app.listen(enviroment.PORT, () => {
 	console.log(`Escuchando puerto ${enviroment.PORT}`);
