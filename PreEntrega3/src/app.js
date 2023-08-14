@@ -14,14 +14,17 @@ import inicializePassport from './config/passport.config.js';
 import passport from 'passport';
 import cookieParser from 'cookie-parser';
 import sessionsRouter from './routers/sessions.router.js';
-import enviroment from './config/enviroment.js';
+import environment from './config/environment.js';
 import { mailsRouter } from './routers/mails.router.js';
 import { mockingProductsRouter } from './routers/mockingproducts.router.js';
 import { errorsManagerMiddleware } from './middleware/errorsManager.middleware.js';
+import { loggerMiddleware } from './middleware/logger.middleware.js';
 
 const app = express();
 let totalProducts = [];
 let messages = [];
+
+app.use(loggerMiddleware);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -37,12 +40,12 @@ inicializePassport(app);
 
 app.use(passport.initialize());
 
-mongoose.connect(enviroment.MONGO_URL);
+mongoose.connect(environment.MONGO_URL);
 
 app.use(
 	session({
 		store: MongoStore.create({
-			mongoUrl: enviroment.MONGO_URL,
+			mongoUrl: environment.MONGO_URL,
 			mongoOptions: {
 				useNewUrlParser: true,
 			},
@@ -64,8 +67,8 @@ app.use('/api/mockingproducts', mockingProductsRouter);
 app.use(errorsManagerMiddleware);
 
 
-const webServer = app.listen(enviroment.PORT, () => {
-	console.log(`Escuchando puerto ${enviroment.PORT}`);
+const webServer = app.listen(environment.PORT, () => {
+	console.log(`Escuchando puerto ${environment.PORT}`);
 });
 const io = new Server(webServer);
 

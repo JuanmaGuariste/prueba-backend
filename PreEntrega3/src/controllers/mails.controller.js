@@ -1,13 +1,13 @@
 import ticketsController from '../controllers/tickets.controller.js';
 import nodemailer from 'nodemailer';
-import enviroment from '../config/enviroment.js';
+import environment from '../config/environment.js';
 
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     port: 587,
     auth: {
-        user: enviroment.EMAIL,
-        pass: enviroment.EMAIL_PASSWORD,
+        user: environment.EMAIL,
+        pass: environment.EMAIL_PASSWORD,
     },
 })
 
@@ -24,8 +24,8 @@ class MailsController {
                             <!-- Puedes agregar más detalles del ticket aquí -->
                         `;
         const mailOptions = {
-            from: `UpSoon Ecommerce <${enviroment.EMAIL}>`,
-            to: enviroment.EMAIL,
+            from: `UpSoon Ecommerce <${environment.EMAIL}>`,
+            to: environment.EMAIL,
             subject: 'UpSoon - Ticket de compra',
             html: htmlContent,
             // attachments: [{

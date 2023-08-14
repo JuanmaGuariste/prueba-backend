@@ -1,16 +1,27 @@
 import { Router } from 'express';
 import productsController from '../controllers/products.controller.js';
 import isValidProductDTO from '../dto/products.dto.js';
+import { loggerMiddleware } from '../middleware/logger.middleware.js';
 
 const productsRouter = Router();
 
 productsRouter.get('/', async (req, res) => {
     const { limit, page, category, status, sort } = req.query;
     try {
+        console.log("Holas")
+        req.logger.fatal("Ingresa en try");
+        req.logger.error("Errorrrr");
+        req.logger.warn("Errorrrr");
+        req.logger.info("Errorrrr");
+        req.logger.http("Errorrrr");
+        req.logger.debug("debug");
         let product = await productsController.getProducts(limit, page, category, status, sort);
+        // throw new Error("BOOMM")
         res.status(201).send({ status: "success", payload: product })
     }
     catch (err) {
+        console.log(err)
+        // req.logger.info("Errorrrr")
         res.status(500).send({ status: "error", error: err })
     }
 });
