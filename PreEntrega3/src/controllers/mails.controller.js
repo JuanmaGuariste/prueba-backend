@@ -36,9 +36,9 @@ class MailsController {
 
         transporter.sendMail(mailOptions, (error, info) => {
             if (error) {
-                console.log(error);
+                req.logger.error(`Error information: ${error}`);
             }
-            //console.log('Email sent: ' + info.response);
+            req.logger.info('Email sent: ' + info.response);
         });       
 
 		return ticket

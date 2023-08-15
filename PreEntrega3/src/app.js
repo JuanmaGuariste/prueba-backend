@@ -19,6 +19,7 @@ import { mailsRouter } from './routers/mails.router.js';
 import { mockingProductsRouter } from './routers/mockingproducts.router.js';
 import { errorsManagerMiddleware } from './middleware/errorsManager.middleware.js';
 import { loggerMiddleware } from './middleware/logger.middleware.js';
+import { logsRouter } from './routers/logs.router.js';
 
 const app = express();
 let totalProducts = [];
@@ -64,12 +65,14 @@ app.use('/api/user', userRouter);
 app.use('/api/sessions', sessionsRouter);
 app.use('/api/mails', mailsRouter);
 app.use('/api/mockingproducts', mockingProductsRouter);
+app.use('/api/loggerTest', logsRouter);
 app.use(errorsManagerMiddleware);
 
 
 const webServer = app.listen(environment.PORT, () => {
 	console.log(`Escuchando puerto ${environment.PORT}`);
 });
+
 const io = new Server(webServer);
 
 io.on('connection', async (socket) => {
@@ -77,9 +80,10 @@ io.on('connection', async (socket) => {
 		totalProducts = await productsController.getAllProducts()
 		messages = await chatsController.getAllMessages()
 	} catch (err) {
-		console.log(err)
+		req.logger.error(`${new Date().toISOString()} - Error information: ${err}`);
 	}
 	console.log('Nuevo cliente conectado!');
+
 	socket.emit('totalProducts', totalProducts);
 
 	socket.on('new-product', async (product) => {
