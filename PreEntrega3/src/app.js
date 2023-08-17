@@ -20,101 +20,114 @@ import { mockingProductsRouter } from './routers/mockingproducts.router.js';
 import { errorsManagerMiddleware } from './middleware/errorsManager.middleware.js';
 import { loggerMiddleware } from './middleware/logger.middleware.js';
 import { logsRouter } from './routers/logs.router.js';
+import cluster from 'cluster';
+import os from 'os';
 
-const app = express();
-let totalProducts = [];
-let messages = [];
-
-
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-app.engine('handlebars', handlerbars.engine());
-app.set('views', 'views/');
-app.set('view engine', 'handlebars');
-
-app.use(express.static('public'));
-
-app.use(cookieParser('B2zdY3B$pHmxW%'));
-inicializePassport(app);
-
-app.use(passport.initialize());
-
-mongoose.connect(environment.MONGO_URL);
-
-app.use(
-	session({
-		store: MongoStore.create({
-			mongoUrl: environment.MONGO_URL,
-			mongoOptions: {
-				useNewUrlParser: true,
-			},
-			ttl: 6000,
-		}),
-		secret: 'B2zdY3B$pHmxW%',
-		resave: true,
-		saveUninitialized: true,
-	})
-);
-app.use(loggerMiddleware);
-app.use('/', viewsRouter);
-app.use('/api/products', productsRouter);
-app.use('/api/carts', cartsRouter);
-app.use('/api/user', userRouter);
-app.use('/api/sessions', sessionsRouter);
-app.use('/api/mails', mailsRouter);
-app.use('/api/mockingproducts', mockingProductsRouter);
-app.use('/api/loggerTest', logsRouter);
-app.use(errorsManagerMiddleware);
-
-
-const webServer = app.listen(environment.PORT, () => {
-	console.log(`Escuchando puerto ${environment.PORT}`);
-});
-
-const io = new Server(webServer);
-
-io.on('connection', async (socket) => {
-	try {
-		totalProducts = await productsController.getAllProducts()
-		messages = await chatsController.getAllMessages()
-	} catch (err) {
-		req.logger.error(`${new Date().toISOString()} - Error information: ${err}`);
+if (cluster.isPrimary) {
+	const cpuCount = os.cpus().length;
+	for (let i = 0; i < cpuCount; i++) {
+		cluster.fork();
 	}
-	console.log('Nuevo cliente conectado!');
 
-	socket.emit('totalProducts', totalProducts);
+} else {
 
-	socket.on('new-product', async (product) => {
+
+
+	const app = express();
+	let totalProducts = [];
+	let messages = [];
+
+
+
+	app.use(express.json());
+	app.use(express.urlencoded({ extended: true }));
+
+	app.engine('handlebars', handlerbars.engine());
+	app.set('views', 'views/');
+	app.set('view engine', 'handlebars');
+
+	app.use(express.static('public'));
+
+	app.use(cookieParser('B2zdY3B$pHmxW%'));
+	inicializePassport(app);
+
+	app.use(passport.initialize());
+
+	mongoose.connect(environment.MONGO_URL);
+
+	app.use(
+		session({
+			store: MongoStore.create({
+				mongoUrl: environment.MONGO_URL,
+				mongoOptions: {
+					useNewUrlParser: true,
+				},
+				ttl: 6000,
+			}),
+			secret: 'B2zdY3B$pHmxW%',
+			resave: true,
+			saveUninitialized: true,
+		})
+	);
+	app.use(loggerMiddleware);
+	app.use('/', viewsRouter);
+	app.use('/api/products', productsRouter);
+	app.use('/api/carts', cartsRouter);
+	app.use('/api/user', userRouter);
+	app.use('/api/sessions', sessionsRouter);
+	app.use('/api/mails', mailsRouter);
+	app.use('/api/mockingproducts', mockingProductsRouter);
+	app.use('/api/loggerTest', logsRouter);
+	app.use(errorsManagerMiddleware);
+
+
+	const webServer = app.listen(environment.PORT, () => {
+		console.log(`Escuchando puerto ${environment.PORT}`);
+	});
+
+	const io = new Server(webServer);
+
+	io.on('connection', async (socket) => {
 		try {
-			await productsController.addProduct(product)
 			totalProducts = await productsController.getAllProducts()
+			messages = await chatsController.getAllMessages()
 		} catch (err) {
-			console.log(err)
+			req.logger.error(`${new Date().toISOString()} - Error information: ${err}`);
 		}
-		io.emit('totalProducts', totalProducts);
-	});
+		console.log('Nuevo cliente conectado!');
 
-	socket.on('delete-product', async (prodId) => {
-		try {
-			await productsController.deleteProduct(prodId)
-			totalProducts = await productsController.getAllProducts()
-		} catch (err) {
-			console.log(err)
-		}
-		io.emit('totalProducts', totalProducts);
-	});
+		socket.emit('totalProducts', totalProducts);
 
-	socket.emit('messages', messages);
+		socket.on('new-product', async (product) => {
+			try {
+				await productsController.addProduct(product)
+				totalProducts = await productsController.getAllProducts()
+			} catch (err) {
+				console.log(err)
+			}
+			io.emit('totalProducts', totalProducts);
+		});
 
-	socket.on('message', async (message) => {
-		await chatsController.addMessage(message)
-		messages = await chatsController.getAllMessages()
-		io.emit('messages', messages);
-	});
+		socket.on('delete-product', async (prodId) => {
+			try {
+				await productsController.deleteProduct(prodId)
+				totalProducts = await productsController.getAllProducts()
+			} catch (err) {
+				console.log(err)
+			}
+			io.emit('totalProducts', totalProducts);
+		});
 
-	socket.on('sayhello', (data) => {
-		socket.broadcast.emit('connected', data);
+		socket.emit('messages', messages);
+
+		socket.on('message', async (message) => {
+			await chatsController.addMessage(message)
+			messages = await chatsController.getAllMessages()
+			io.emit('messages', messages);
+		});
+
+		socket.on('sayhello', (data) => {
+			socket.broadcast.emit('connected', data);
+		});
 	});
-});
+}
