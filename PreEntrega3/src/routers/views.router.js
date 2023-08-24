@@ -104,4 +104,21 @@ viewsRouter.get('/current', middlewarePassportJWT, async (req, res) => {
     }
 });
 
+viewsRouter.get("/restore-password/uid/:uid", async (req, res) => {
+    let userId = req.params.uid;
+    try {
+         let newUser = await usersController.getUserById(userId);
+         console.log(newUser)
+        // req.logger.info(`Email: ${email}`);
+        // req.logger.info(`Password: ${psw}`);
+        res.render('restorePassword', {
+            title: 'Restablecer contraseña',
+            newUser
+        });
+        // let emailSent = await mailsController.restorePasswordMail(email);        
+    } catch (err) {
+        res.status(500).send({ status: "error", error: err })
+    }
+})
+
 export default viewsRouter;

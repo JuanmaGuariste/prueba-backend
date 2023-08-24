@@ -1,5 +1,10 @@
 import { Router } from 'express';
 import mailsController from '../controllers/mails.controller.js';
+import bcrypt from 'bcrypt';
+import usersController from '../controllers/users.controller.js';
+import { hashPassword} from '../utils/encrypt.utils.js';
+import { logger } from '../middleware/logger.middleware.js';
+
 
 const mailsRouter = Router();
 
@@ -23,14 +28,26 @@ mailsRouter.post("/:userEmail", async (req, res) => {
         res.status(500).send({ status: "error", error: err })
     }
 });
-mailsRouter.get("/restore-password/email/:email/psw/:psw", async (req, res) => {
-    let email = req.params.email;
-    let psw = req.params.psw;
-    try {
-        req.logger.info(`Email: ${email}`);
-        req.logger.info(`Password: ${psw}`);
-        // let emailSent = await mailsController.restorePasswordMail(email);        
-        res.status(201).send({ status: "success", payload: email });
+
+mailsRouter.post("/restore-password/uid/:userId", async (req, res) => {
+    let  {password}  = req.body;  
+    let userId = req.params.userId;
+    try {      
+        logger.info(userId)
+        logger.info(password)
+        let user = await usersController.getUserById(userId);
+        logger.info(user)
+        if (bcrypt.compareSync(password, user.password)) {
+            logger.error(`No se puede utilizar la misma contraseña`);
+        } else {
+            const hashedPassword = hashPassword(password);
+            let newUser =  {                
+                password: hashedPassword,                
+            } 
+            logger.info(hashedPassword)
+            await usersController.updateUser(userId, newUser);
+        }
+        res.status(201).send({ status: "success", payload: newUser });
     } catch (err) {
         res.status(500).send({ status: "error", error: err })
     }
