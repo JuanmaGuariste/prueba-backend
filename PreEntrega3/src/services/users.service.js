@@ -17,7 +17,7 @@ export default class ProductsService {
 		if (id === "coder"){						
 			return null
 		}else {
-			//return  await this.dao.getUserById(id);			
+			let user = await this.dao.getUserById(id);			
 			return new UserDTO(user)
 		}		 
 	}
