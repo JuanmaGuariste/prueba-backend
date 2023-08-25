@@ -4,6 +4,8 @@ import { middlewarePassportJWT} from '../middleware/jwt.middleware.js';
 import { isUser, isAdmin } from '../middleware/auth.middleware.js';
 import productsController from '../controllers/products.controller.js';
 import usersController from '../controllers/users.controller.js';
+import passport from "passport";
+
 
 const viewsRouter = Router();
 
@@ -104,9 +106,10 @@ viewsRouter.get('/current', middlewarePassportJWT, async (req, res) => {
     }
 });
 
-viewsRouter.get("/restore-password/uid/:uid", async (req, res) => {
+viewsRouter.get("/restore-password/uid/:uid/token/:token", async (req, res) => {
     let userId = req.params.uid;
-    try {
+    let tokenHash = req.params.token;
+    try {       
         let newUser = await usersController.getUserById(userId);
         res.render('restorePassword', {
             title: 'Restablecer contraseña',
