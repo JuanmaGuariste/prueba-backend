@@ -64,7 +64,8 @@ class MailsController {
                             `;
             const mailOptions = {
                 from: `UpSoon Ecommerce <${environment.EMAIL}>`,
-                to: environment.EMAIL,
+                to: environment.EMAIL, //TODO: cambiar por user mail
+                // to: user.EMAIL, 
                 subject: 'UpSoon - Restauración de contraseña',
                 html: htmlContent,
             };

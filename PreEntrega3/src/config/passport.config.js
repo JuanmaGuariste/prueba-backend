@@ -6,21 +6,19 @@ import cartsController from '../controllers/carts.controller.js';
 import { hashPassword } from '../utils/encrypt.utils.js';
 import jwt from "passport-jwt";
 import { ExtractJwt } from 'passport-jwt';
-
+import environment from '../config/environment.js';
 
 const jwtStrategy = jwt.Strategy
 const jwtExtract = ExtractJwt;
 const LocalStrategy = local.Strategy;
 
 const generateJWTToken = async (payload) => {
-    const secretKey = 'adkkkkasdasdasdapsdoiak##sdasdasd%';
-    const expiresIn = '10m';
+    const secretKey = environment.SECRET_KEY;
+    const expiresIn = '1h';
     const jwt = await import('jsonwebtoken')
     const token = jwt.default.sign(payload, secretKey, { expiresIn });
-    console.log(token)
     return token;
 }
-
 
 const inicializePassport = () => {
     passport.use("github", new GitHubStrategy({

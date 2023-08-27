@@ -9,7 +9,7 @@ if (cluster.isPrimary) {
     logger.info(`Primary ${process.pid} is running`);
     const cpuCount = os.cpus().length;
     // for (let i = 0; i < cpuCount; i++) {        
-    for (let i = 0; i < 1; i++) {        
+    for (let i = 0; i < 1; i++) { //TODO: cambiar por CPU COUNT   
         cluster.fork();
     }
     cluster.on('exit', (worker, code, signal) => {
