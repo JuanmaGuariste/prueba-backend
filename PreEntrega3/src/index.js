@@ -44,7 +44,7 @@ if (cluster.isPrimary) {
                         socket.emit('totalProducts', totalProducts);
 
                         socket.on('new-product', async (product) => {
-                            try {
+                            try {                     
                                 await productsController.addProduct(product)
                                 totalProducts = await productsController.getAllProducts()
                             } catch (err) {
@@ -53,15 +53,24 @@ if (cluster.isPrimary) {
                             io.emit('totalProducts', totalProducts);
                         });
 
-                        socket.on('delete-product', async (prodId) => {
+                        socket.on('delete-product', async () => {
                             try {
-                                await productsController.deleteProduct(prodId)
+                                console.log("delete-product")
                                 totalProducts = await productsController.getAllProducts()
+                                io.emit('totalProducts', totalProducts);
                             } catch (err) {
                                 logger.error(err)
                             }
-                            io.emit('totalProducts', totalProducts);
                         });
+                        // socket.on('delete-product', async (prodId) => {
+                        //     try {
+                        //         await productsController.deleteProduct(prodId)
+                        //         totalProducts = await productsController.getAllProducts()
+                        //     } catch (err) {
+                        //         logger.error(err)
+                        //     }
+                        //     io.emit('totalProducts', totalProducts);
+                        // });
 
                         socket.emit('messages', messages);
 
