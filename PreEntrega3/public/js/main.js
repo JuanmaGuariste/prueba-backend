@@ -55,7 +55,7 @@ async function deleteProductFromCart(pid, cid) {
 	}
 }
 
-function sendProduct() {
+function sendProduct(userId) {
 	const product = {}
 	product.title = document.getElementById('title').value;
 	product.description = document.getElementById('description').value;
@@ -65,6 +65,7 @@ function sendProduct() {
 	product.code = document.getElementById('code').value;
 	product.stock = document.getElementById('stock').value;
 	product.status = document.getElementById('status').value;
+	product.owner =  userId;
 	socket.emit('new-product', product);
 }
 
