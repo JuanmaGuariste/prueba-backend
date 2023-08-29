@@ -23,14 +23,10 @@ class ProductsController {
 	async deleteProduct(id, user) {
 		let prod = await this.service.getProductById(id);	
 		if (user.rol == "admin" ){
-			console.log("USER ADMIN")
 			return await this.service.deleteProduct(id);
-		} else if (user.rol == "premium" && prod.owner == user._id) {
-			console.log("USER PREMIUM")
+		} else if ((user.rol == "premium") && (prod.owner == user._id)) {
 			return await this.service.deleteProduct(id);
 		} else {
-			console.log("OTRO")
-
 			return false
 		}		
 	}

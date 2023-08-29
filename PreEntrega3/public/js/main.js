@@ -70,21 +70,21 @@ function sendProduct(userId) {
 }
 
 async function deleteProduct() {
-	const prodId = document.getElementById('id').value;
-	const response = await fetch(`http://localhost:8080/api/products/${prodId}`, {
-		method: 'DELETE'
-	});
-	if (response) {
-		socket.emit('delete-product');		
-	}
-} 
-	
-	
-
-// function deleteProduct() {
-// 	const prodId = document.getElementById('id').value;
-// 	socket.emit('delete-product', prodId);
-// }
+    const prodId = document.getElementById('id').value;
+    try {
+		
+		let response = await fetch(`http://localhost:8080/api/products/${prodId}`, {
+			method: 'DELETE'
+        })		
+        if (response.ok ) {			
+			await socket.emit('delete-product');
+        } else {
+            console.log('Error al eliminar el producto:', response.statusText);
+        }
+    } catch (error) {
+        console.log('Error al enviar la solicitud de eliminación:', error);
+    }
+}
 
 async function createTicket(cid) {
 	const response = await fetch(`http://localhost:8080/api/carts/${cid}/purchase`, {

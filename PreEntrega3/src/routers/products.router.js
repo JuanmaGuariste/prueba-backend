@@ -50,13 +50,10 @@ productsRouter.put('/:pid', async (req, res, next) => {
 
 productsRouter.delete('/:pid', middlewarePassportJWT, async (req, res) => {
     let user = req.user
+    let id = req.params.pid;
     try {
-        let id = req.params.pid;
-        let res = await productsController.deleteProduct(id, user);
-        if (!res) {
-            res.status(400).send({ status: "error", error: "User without permissions" })
-        }
-        res.status(201).send({ status: "success", payload: res });
+        let respuesta = await productsController.deleteProduct(id, user);        
+        res.status(201).send({ status: "success", payload: respuesta });
     } catch (err) {
         res.status(500).send({ status: "error", error: err })
     }
