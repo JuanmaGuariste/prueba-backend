@@ -76,5 +76,4 @@ if (cluster.isPrimary) {
                     });
                 })
         })
-
 }
