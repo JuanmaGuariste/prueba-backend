@@ -2,6 +2,8 @@ import { Router } from 'express';
 import productsController from '../controllers/products.controller.js';
 import { isValidProductDTO, isValidProductIdDTO } from '../dto/products.dto.js';
 import { middlewarePassportJWT } from '../middleware/jwt.middleware.js';
+// import  {io} from "../index.js"
+import { emitter } from '../emiter.js';
 
 const productsRouter = Router();
 
@@ -159,10 +161,16 @@ productsRouter.get('/:pid', async (req, res) => {
  *    500:
  *     description: Some server error 
  */
+
 productsRouter.post('/', async (req, res, next) => {
     try {
+        // let io = await socketio.socketio();
         const product = new isValidProductDTO(req.body)
         let prodComplete = await productsController.addProduct(product);
+        // if (!(io === null)) {
+        //     console.log("EROR SOCKETIO")
+        // }
+        emitter.emit('new-product', prodComplete);
         res.status(201).send({ status: "success", payload: prodComplete });
     } catch (err) {
         next(err);

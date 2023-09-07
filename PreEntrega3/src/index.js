@@ -6,8 +6,13 @@ import chatsController from './controllers/chats.controller.js';
 import { logger } from './middleware/logger.middleware.js';
 import { setupMaster, setupWorker } from '@socket.io/sticky';
 import { createAdapter, setupPrimary } from '@socket.io/cluster-adapter';
+// import { io } from "./socketio.js";
+import socketio from "./socketio.js";
+import { emitter } from './emiter.js';
 
-if (cluster.isPrimary) {
+
+export let io;
+if (cluster.isPrimary) {    
     logger.info(`Primary ${process.pid} is running`);
     import('./config/environment.js')
         .then((module) => {
@@ -40,66 +45,19 @@ if (cluster.isPrimary) {
         });
 } else {
     logger.info(`Worker ${process.pid} started`);
-    import('./config/environment.js')
-        .then((module) => {
-            const environment = module.default;
-            import("./app.js")
-                .then((module) => {
-                    const app = module.default;
-                    const webServer = app.listen(environment.PORT, () => {
-                        logger.info(`Escuchando puerto ${environment.PORT}`);
-                    });
+    io = await socketio.socketio();
+    io.adapter(createAdapter());
+    setupWorker(io);
+    emitter.on ("new-product", async (product) => {
+        let totalProducts = [];
 
-                    const io = new Server(webServer);
-
-                    io.adapter(createAdapter());
-
-                    setupWorker(io);
-                    let totalProducts = [];
-                    let messages = [];
-                    io.on("connection", async (socket) => {
-                        try {
-                            totalProducts = await productsController.getAllProducts()
-                            messages = await chatsController.getAllMessages()
-                        } catch (err) {
-                            logger.error(`${new Date().toISOString()} - Error information: ${err}`);
-                        }
-                        logger.info('Nuevo cliente conectado!');
-
-                        socket.emit('totalProducts', totalProducts);
-
-                        socket.on('new-product', async (product) => {
-                            try {
-                                await productsController.addProduct(product)
-                                totalProducts = await productsController.getAllProducts()
-                            } catch (err) {
-                                logger.error(err)
-                            }
-                            io.emit('totalProducts', totalProducts);
-                        });
-
-                        socket.on('delete-product', async () => {
-                            try {
-                                totalProducts = await productsController.getAllProducts()
-                            } catch (err) {
-                                logger.error(err)
-                            }
-                            io.emit('totalProducts', totalProducts);
-                        });
-
-                        socket.emit('messages', messages);
-
-                        socket.on('message', async (message) => {
-                            await chatsController.addMessage(message)
-                            messages = await chatsController.getAllMessages()
-                            io.emit('messages', messages);
-                        });
-
-                        socket.on('sayhello', (data) => {
-                            socket.broadcast.emit('connected', data);
-                        });
-                    });
-
-                });
-        });
+        try {
+            // await productsController.addProduct(product)
+            totalProducts = await productsController.getAllProducts()
+            io.emit('totalProducts', JSON.stringify(totalProducts));
+        } catch (err) {
+            logger.error(err)
+        }
+      
+    })
 }
