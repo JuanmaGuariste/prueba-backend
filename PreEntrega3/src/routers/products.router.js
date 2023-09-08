@@ -2,7 +2,6 @@ import { Router } from 'express';
 import productsController from '../controllers/products.controller.js';
 import { isValidProductDTO, isValidProductIdDTO } from '../dto/products.dto.js';
 import { middlewarePassportJWT } from '../middleware/jwt.middleware.js';
-// import  {io} from "../index.js"
 import { emitter } from '../emiter.js';
 
 const productsRouter = Router();
@@ -164,12 +163,8 @@ productsRouter.get('/:pid', async (req, res) => {
 
 productsRouter.post('/', async (req, res, next) => {
     try {
-        // let io = await socketio.socketio();
         const product = new isValidProductDTO(req.body)
         let prodComplete = await productsController.addProduct(product);
-        // if (!(io === null)) {
-        //     console.log("EROR SOCKETIO")
-        // }
         emitter.emit('new-product', prodComplete);
         res.status(201).send({ status: "success", payload: prodComplete });
     } catch (err) {
@@ -215,7 +210,7 @@ productsRouter.put('/:pid', async (req, res, next) => {
     let id = req.params.pid;
     try {
         const pid = await isValidProductIdDTO(id)
-        let prodUpdated = await productsController.updateProduct(pid, req.body);
+        let prodUpdated = await productsController.updateProduct(pid, req.body);        
         res.status(201).send({ status: "success", payload: prodUpdated });
     } catch (err) {
         next(err);
@@ -250,6 +245,7 @@ productsRouter.delete('/:pid', middlewarePassportJWT, async (req, res) => {
     let id = req.params.pid;
     try {
         let respuesta = await productsController.deleteProduct(id, user);
+        emitter.emit('new-product', respuesta);
         res.status(201).send({ status: "success", payload: respuesta });
     } catch (err) {
         res.status(500).send({ status: "error", error: err })

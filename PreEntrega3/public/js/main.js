@@ -78,8 +78,6 @@ async function sendProduct(userId) {
 			'Content-Type': 'application/json'
 		}		
 	});
-
-	// socket.emit('new-product', product);
 }
 
 async function deleteProduct() {
@@ -88,12 +86,7 @@ async function deleteProduct() {
 		
 		let response = await fetch(`http://localhost:8080/api/products/${prodId}`, {
 			method: 'DELETE'
-        })		
-        if (response.ok ) {			
-			await socket.emit('delete-product');
-        } else {
-            console.log('Error al eliminar el producto:', response.statusText);
-        }
+        })		       
     } catch (error) {
         console.log('Error al enviar la solicitud de eliminación:', error);
     }
@@ -148,9 +141,6 @@ async function restorePassword() {
 }
 
 socket.on('totalProducts', (data) => {
-	// if(typeof data === 'string'){
-	// 	data = JSON.parse(data);
-	// }
 	const html = JSON.parse(data).map((elem, index) => {
 		return `<div class="product-container">
 		<h2>Producto</h2>
