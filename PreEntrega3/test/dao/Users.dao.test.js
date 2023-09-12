@@ -17,7 +17,6 @@ describe('UserDAO - MongoDB', async () => {
         this.timeout(10000);
     });
 
-
     it('El DAO debe agregar un usuario correctamente a la base de datos de MongoDB', async () => {
         const mockUser = {
             first_name: 'Juan',
